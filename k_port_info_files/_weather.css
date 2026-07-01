@@ -1,0 +1,290 @@
+@charset "utf-8";
+
+.sub_visual{ background-image:url('images/weather/visual_bg.jpg');}
+
+/* airport */
+#floatingBtn {display:flex; align-items: center; position:fixed; top:180px; left:8%; z-index:9999; cursor:pointer; min-width:120px; height:56px; padding:0 18px; gap:8px; border:2px solid #d9e2f2; border-radius:999px; background:#ffffff; color: #1f2d3d; box-shadow:0 8px 24px rgba(0,0,0,0.12);}
+#floatingBtn img {width:18px; height:18px; flex:0 0 18px;}
+#floatingBtn b {font-size:15px; font-weight:600;}
+
+.airport_info_wrap { background:url('images/weather/weather_top_bg.jpg') 0 0 repeat-x; background-size:contain; padding:0;}
+.airport_weather_info .width_box{ display:flex; justify-content:stretch; background-color:#fff; border:1px solid #cbd7e6; border-bottom:0; padding:0; height:181px; position:relative;}
+.airport_weather_info.int-airport .width_box{ height:181px; background-color:#fff; border:1px solid #cbd7e6; }
+.airport_weather_info .airport_tit{ float:left; width:28%;}
+.airport_weather_info .airport_tit .at_inner_top{ padding:37px 65px; height:180px; background-color:#103972; color:#fff;}
+.airport_weather_info.int-airport .airport_tit .at_inner_top{ display:flex; flex-wrap:wrap; flex-direction:row; justify-content:flex-start; align-items:center; padding:20px 37px; height:180px; background-color:#103972; color:#fff; position:relative;}
+
+.airport_weather_info .airport_tit .at_inner_top .airport_spl{ background-color:#ff5921; display:inline-block; padding:1px 5px; letter-spacing:0.03em; font-size:17px; line-height:1.3;}
+.airport_country {padding-left:5px;}
+.airport_weather_info .airport_tit .at_inner_top .airport_big_name{ font-size:28px;}
+.airport_weather_info.int-airport .airport_tit .at_inner_top .airport_big_name{ font-size:20px; line-height:1.1;}
+
+.airport_weather_info .airport_tit .at_inner_top hr{ margin:5px 0 !important; position:initial; width:100% !important; border:0; border-top:1px solid #ddd; background:none;}
+.airport_weather_info .airport_tit .at_inner_top .airport_small_name{ font-size:17px; text-transform:uppercase; line-height:1.1;}
+.airport_weather_info .airport_tit .at_inner_bottom{ padding:35px 20px; font-size:20px;}
+.airport_weather_info .airport_tit .at_inner_bottom img{ vertical-align:middle; margin-right:20px;}
+
+.airport_weather_info a.toggle-arrow{ text-indent:-99999px; content:''; float:right;  height:41px; width:41px; background:url('images/main/main_news_arw.png') no-repeat center center; background-size:21px auto; transition:all 0.3s; position:absolute}
+.airport_weather_info a.toggle-arrow.toggle { transform:rotateZ(-180deg); }
+.airport_weather_info .korea_airports { padding:20px; border:1px solid #cbd7e6; position:absolute; top:100px; left:-1px; right:-1px; z-index:1; background-color:#fff; display:none;}
+.airport_weather_info .korea_airports.active { display:block; }
+.airport_weather_info .korea_airports ul { display:flex; flex-wrap:wrap; width:100%;}
+.airport_weather_info .korea_airports ul li { width:20%; padding:5px; }
+.airport_weather_info .korea_airports ul li a { display:block; border:1px solid #cbd7e6; padding:10px 15px; text-align:center;}
+.airport_weather_info .korea_airports ul li a:hover,.airport_weather_info .korea_airports ul li a:focus { background-color:#f0f0f0; }
+.airport_weather_info .korea_airports ul li a.on,.airport_weather_info .korea_airports ul li a.on:hover,.airport_weather_info .korea_airports ul li a.on:focus { background-color:#f0f0f0; }
+
+.airport_weather_info .airport_temp{ position:relative; float:left; width:60%;}
+.airport_weather_info .airport_temp .tm_inner_top{ display:flex; align-items:center; justify-content:center; padding:40.5px 40px; border-bottom:1px dashed #ddd; height:180px; }
+
+.wea_air_temp{ display:inline-block; vertical-align:middle; width:40%;}
+.wea_air_temp .wea_air_wthr{ display:inline-block; margin-right:10px;}
+.wea_air_temp .wea_air_wthr span[class^='mtph'],
+ .wea_air_temp .wea_air_wthr span[class*=' mtph'] {display:block; width:65px; height:100px; margin-top:5px; float:right; margin-right:0px;}
+.wea_air_temp .wea_air_text{ display:inline-block; text-align:left;}
+.wea_air_temp .wea_air_text b{ font-size:40px;}
+.wea_air_temp .wea_air_text b sup{ font-size:24px;}
+.wea_air_info{ display:inline-block; vertical-align:middle; width:50%;}
+.wea_air_info ul{ overflow:hidden;}
+.wea_air_info ul li{ float:left; width:50%; font-size:17px; text-align:left; position:relative; padding-left:8px; color:#424242;}
+.wea_air_info ul li:after{ width:3px; height:3px; position:absolute; top:10px; left:0; content:''; display:inline-block; background-color:#000; border-radius:50%;}
+.wea_air_info ul li:nth-child(5) { width:100%; }
+.wea_air_info ul li b{ color:#000;}
+.airport_weather_info .airport_temp .tm_inner_bottom .time_item{ text-align:center; display:flex; align-items:center; justify-content:center; min-height:97px;}
+.airport_weather_info .airport_temp .tm_inner_bottom .time_item div{ padding:10px 10px; background-color:#f1f5fa; width:47%; margin:0 1%; display:inline-block; text-align:left;}
+.airport_weather_info .airport_temp .tm_inner_bottom .time_item div p{ float:right;}
+.airport_weather_info .airport_temp .tm_inner_bottom .time_item div b{ color:#103972;}
+.airport_weather_info .airport_temp .tm_inner_bottom .time_item div p span{ display:inline-block; color:#fff; background-color:#1b5995; padding:0 6px; line-height:20px;}
+.airport_weather_info .airport_map{ float:right; width:23%; text-align:right;}
+
+.tm_issue_date { position:absolute; right:10px; top:10px; font-size:17px; }
+.tm_issue_date a { font-size:17px; display:inline-block; background: url('images/ic_sym_99.png') no-repeat left center; background-size: auto 14px; padding-left: 15px;}
+
+.slick-prev{ background-image:url('images/weather/weather_prev_arw.png') !important; left:-50px !important; top:46px !important;}
+.slick-next{ background-image:url('images/weather/weather_next_arw.png') !important; right:-50px !important; top:46px !important;}
+.airport_temp_info{ margin:40px 0; overflow:hidden; background:url('images/weather/temp_bg.jpg') 0% 100% no-repeat; border-bottom:1px solid #000; padding:40px 0 30px;}
+.airport_temp_info .temp_tit{ float:left; width:20%; font-size:17px; text-align:center; line-height:1.2;}
+.airport_temp_info .temp_tit p{ font-size:22px;}
+.airport_temp_info .temp_tit p b{ font-size:55px;}
+.airport_temp_info .temp_con{ float:left; width:80%; text-align:center;}
+.airport_temp_info .temp_con ul{  display:flex; align-items:center; justify-content:space-around; flex-wrap:wrap;}
+.airport_temp_info .temp_con ul li{ float:left; }
+.airport_temp_info .temp_con ul li b{ font-size:17px; display:inline-block; padding-top:5px; border-top:1px solid #b4c1d3; font-weight:normal;}
+.airport_temp_info .temp_con ul li p{ font-size:38px; font-weight:bold;}
+.airport_temp_info .temp_con ul li p span{ font-size:24px; vertical-align:bottom; font-weight:normal; margin-top:5px;}
+.airport_temp_info a.toggle-arrow{ text-indent:-99999px; content:''; float:right;  height:41px; width:41px; background:url('images/main/main_news_arw.png') no-repeat center center; background-size:21px auto; transition:all 0.3s; }
+.airport_temp_info a.toggle-arrow.toggle { transform:rotateZ(-180deg); }
+
+.all_climate_info_wrap {margin-top:-120px; margin-bottom:120px;}
+.all_climate_info_wrap.wwis-climate { margin-top:-120px; margin-bottom:120px;}
+.all_climate_info_wrap .width_box { position:relative; }
+.all_climate_info .table_st1 tbody td{ background:#fff;}
+.all_climate_info_wrap.wwis-climate .all_climate_info .table_st1 table { min-width:400px; }
+.all_climate_info { position:absolute; display:none; width:100%; z-index:1; }
+
+.airport_wmo_info { display:flex; align-items:center; justify-content:space-between; padding-top:20px; }
+.airport_wmo_info .norms-info { display:flex; align-items:center; flex-wrap:wrap;font-size:17px; }
+.airport_wmo_info .norms-info > a { margin-right:20px; }
+.airport_wmo_info .norms-info img { max-height:50px; }
+.airport_wmo_info .wwis-source { display:flex; align-items:center; flex-wrap:wrap; }
+.airport_wmo_info .wwis-source span { display:inline-block; font-size:20px; letter-spacing:-1px; padding:0 10px; }
+
+.airport_plain_info{ padding:0 0 40px;}
+.airport_plain_info .width_box{ display:flex; flex-wrap:wrap; background-color:#fff; border:1px solid #cbd7e6; border-top:0;position:relative;}
+.airport_plain_tit{ width:25%; height:100px; display:flex; align-items:center; padding:35px 20px; font-size:20px;}
+.airport_plain_tit img { margin-right:20px; }
+
+.airport_plain_content{ width:52%; height:100px; padding:25px 0; position:relative; }
+.airport_plain_content .time_item{ text-align:center; display:flex; }
+.airport_plain_content .time_item div{ padding:10px 10px; background-color:#f1f5fa; width:95%; margin:0 1%; display:inline-block; text-align:left;}
+.airport_plain_content .time_item div p{ float:none; text-align:right; }
+.airport_plain_content .time_item div b{ color:#103972;}
+.airport_plain_content .time_item div p span{ display:inline-block; color:#fff; background-color:#1b5995; padding:0 6px; line-height:20px;}
+.airport_plain_content .time_item div p span.bg_red{background-color:#94221B;}
+.airport_plain_content .ca-wrapper { max-height:67px; overflow-y:hidden;}
+.airpor_api{ margin:20px 0; }
+
+.termi_search{ margin-bottom:20px; text-align:center;}
+.termi_search form > p{ margin:20px 0;}
+.termi_search .termi_form{ width:100%; max-width:532px; margin:0 auto; background-color:#fff; overflow:hidden;}
+.termi_search .termi_form .termi_input{ float:left; width:calc(100% - 260px); border:1px solid #ccc; box-sizing:border-box;}
+.termi_search .termi_form .termi_input p{ width:40px; height:40px; background:url('images/search_box_icon.png') 50% 50% no-repeat; font-size:0px; float:left;}
+.termi_search .termi_form .termi_input input{ height:40px; line-height:42px; float:left; width:calc(100% - 46px); border:0; border-radius:0;}
+.termi_search .termi_form .btn{ float:left; width:120px; box-sizing:border-box; margin:0; padding:0; margin-left:10px; }
+.termi_search .termi_btn{ margin-top:15px;}
+.termi_search .termi_btn a,
+.termi_search .termi_btn button{ background-color:#f7fbff; color:#3f4042 !important; border:1px solid #ddd; border-radius:3px; width:34px; height:34px; line-height:34px; display:inline-block;}
+.termi_search .termi_btn a:hover,
+.termi_search .termi_btn button:hover{ background-color:#d6e1ed; color:#3f4042 !important;}
+.termi_search .termi_btn a.selected,
+.termi_search .termi_btn a.selected:hover,
+.termi_search .termi_btn button.selected:hover{ background-color:#d6e1ed; color:#3f4042 !important;}
+
+
+.no_typhoon{ text-align:center; padding:100px 0;}
+.ul_arrow_T10{ margin-top:10px; }
+.ul_arrow_T10 li{line-height:150%; font-size: 15px; }
+.ul_arrow_T10 li:before{content:'-'; display:inline-block; color:#21649c; font-weight:700;padding-right:5px;}
+.typhoon-cont img {width:100%; padding-top:8px;}
+.typhoon-item .typhoon-cont div.title { line-height: 150%; font-size: 17px; padding-left:4px; padding:10px 5px;}
+.typhoon-cont .sub_blue_bg { padding:10px 0; margin-bottom:10px;}
+.typhoon-cont .table_st1 table { min-width:1000px; }
+.typhoon-cont .table_st1 table tr td:first-of-type, .typhoon-cont .table_st1 table tr th:first-of-type { min-width:100px; }
+
+
+.airport_more{ margin:10px 0 20px;}
+.airport_more .a_more_open{ margin:0 auto; display:block; padding:6px 10px; width:120px; background-color:#21649c; color:#fff; text-align:center; cursor:pointer; position:absolute; bottom:33px; right:59px;}
+.airport_more .a_more_con{ padding:10px 20px 30px; border:1px solid #cbd7e6; position:absolute; top:100px; left:-1px; right:-1px; z-index:1; background-color:#fff; display:none;}
+.airport_more .a_more_con.active{ display:block;}
+.airport_more .a_more_con h5{ font-size:16px; color:#244d70; font-weight:bold; margin:20px 0 10px;}
+.airport_more .a_more_con h5 b{ font-size:22px;}
+.airport_more .a_more_close{ position:absolute; top:17px; right:20px; width:36px; height:36px; background:url('images/main/x_botton.png') 50% 50% no-repeat; display:block; cursor:pointer;}
+.airport_more table tr td .condi{ font-size:12px; display:inline-block; padding:3px 10px;}
+.airport_more table tr td .condi.rsonCode{ background-color:#F2B705; color:#FFFFFF; }
+.airport_more table tr td .condi.rsonCode:hover{ cursor:pointer; }
+.airport_more table tr td .condi.bg_red{ background-color:#9C2521; }
+.airport_more .plain_guide { padding:20px 0 0 10px; }
+
+/* aviation */
+
+@media (max-width:1825px){
+#floatingBtn {left:5%;}
+	}
+	
+@media (max-width:1705px){
+#floatingBtn {left:3%;}
+	}
+
+@media (max-width:1620px){
+#floatingBtn {min-width:auto;}
+#floatingBtn b {display:none;}
+	}
+	
+@media (max-width:1299px){
+ .airport_weather_info .airport_tit { float:left; width:30%;}
+ .airport_weather_info .airport_temp { float:left; width:47%;}
+ .airport_weather_info .airport_temp .tm_inner_top { min-height:180px; padding:0 20px 0;}
+ .wea_air_temp { width:35%; }
+ .wea_air_temp .wea_air_wthr {display:block;}
+ .wea_air_temp .wea_air_text {display:block; text-align:center;}
+ .wea_air_temp .wea_air_text span {display:block; text-align:center;}
+ .wea_air_temp .wea_air_wthr span[class^='mtph'], .wea_air_temp .wea_air_wthr span[class*=' mtph'] { margin:auto; float:none;}
+ .wea_air_info { width:65%; }
+ /* .wea_air_info ul li{ float:none; width:auto; margin-bottom:5px;} */
+ .slick-prev{ left:-40px !important; top:46px !important;}
+ .slick-next{ right:-40px !important; top:46px !important;}
+ .airport_plain_tit { width:30%;}
+ .airport_plain_content { width:47%;}
+ .airport_plain_info{ padding:0 0 40px;}
+
+ .airpor_api{ margin:10px 0; }
+
+ .airport_temp_info .temp_con ul { flex-wrap:wrap;}
+ .airport_temp_info .temp_tit p { margin-top:20px; }
+
+ .all_climate_info_wrap {margin-top:-100px; margin-bottom:100px; width: calc(100% - 20px);}
+ .all_climate_info_wrap.wwis-climate { margin-top:-80px; margin-bottom:80px;}
+}
+
+@media (max-width:1199px){
+ .airport_weather_info .width_box{ padding:0 10px;}
+}
+
+@media (max-width:959px){
+ 	#floatingBtn{left:0;transform:translate(-50%);}
+	#floatingBtn img {transform:translateX(10px);}
+	
+ .airport_info_wrap{background:none;}
+
+ .airport_weather_info .width_box{ display:block; overflow:hidden; height:auto; border:0;}
+ .airport_weather_info.int-airport .width_box{ overflow:hidden; height:auto; border:0;}
+ .airport_weather_info .airport_tit,
+ .airport_weather_info .airport_temp,
+ .airport_weather_info .airport_map{ float:none; width:auto;}
+ .airport_weather_info .airport_temp .tm_inner_top{ border-bottom:0;}
+ .airport_weather_info .airport_map_btn{ }
+ .airport_weather_info .airport_map_btn a{ display:block; line-height:50px; text-align:center; border:2px solid #ddd; box-sizing:border-box;}
+ .airport_weather_info .airport_map_btn a img{ margin-left:10px; -webkit-transition:all 0.2s ease; -moz-transition:all 0.2s ease; -ms-transition:all 0.2s ease; -o-transition:all 0.2s ease; transition:all 0.2s ease;}
+ .airport_weather_info .airport_map_btn a.active img{ -webkit-transform:rotate(180deg); -moz-transform:rotate(180deg); -ms-transform:rotate(180deg); -o-transform:rotate(180deg); transform:rotate(180deg);}
+
+ .airport_weather_info .airport_map { height:0; overflow:hidden; }
+ .airport_weather_info .airport_map.active { height:300px; }
+
+ .airport_weather_info .airport_tit .at_inner_top{ height:auto;}
+ .airport_weather_info.int-airport .airport_tit .at_inner_top{ height:auto;}
+ .airport_weather_info .airport_tit .at_inner_bottom{ display:none;}
+ .airport_weather_info .airport_temp .tm_inner_top { height:auto; min-height:auto; padding:15px 0; }
+ .airport_weather_info .airport_temp .tm_inner_bottom .time_item div{ margin:5px 0; width:100%;}
+ .slick-prev{ left:-10px !important; top:34px !important;}
+ .slick-next{ right:-10px !important; top:34px !important;}
+
+ .airport_plain_info { padding:0; }
+ .airport_plain_info .width_box{ border:0; }
+ .airport_plain_tit{ font-size:17px; width:100%; padding:30px 0 0px; height:auto; }
+ .airport_plain_tit img { margin-right:10px; }
+
+ .airport_plain_content{ width:100%; height:80px; padding:10px 40px;}
+ .airport_plain_content .time_item{ text-align:center; display:block;  width:100%;}
+ .airport_plain_content .time_item div { width:calc(100% - 10px); }
+
+ .airport_more{ position:relative; width:100%; margin-top:0;}
+ .airport_more .a_more_open{ position:initial;}
+ .airport_more .a_more_con{ top:44px;}
+ .airport_temp_info{ padding:10px 0; margin:10px 0; display:flex; align-items:center; }
+ .airport_temp_info .temp_tit{ width:30%;}
+ .airport_temp_info .temp_con{ width:70%;}
+ .airport_temp_info .temp_con ul { display:block; }
+ .airport_temp_info .temp_con ul li{ width:33%;}
+ .airport_temp_info .temp_con ul li:nth-child(n+4) { margin-top:20px; }
+ .airport_temp_info .temp_con ul li p{ font-size:20px;}
+ .airport_temp_info .temp_con ul li p span{ font-size:17px;}
+
+ .wea_air_temp { width:50%; }
+ .wea_air_info { width:40%; }
+ .wea_air_info ul li{ float:none; width:auto; margin-bottom:5px;}
+ .tm_issue_date { position:relative; right:auto; top:auto; font-size:17px; padding:10px 10px 0 10px; text-align:right;}
+ .termi_search form > p{ font-size:14px; line-height:1.5;}
+ .termi_search .termi_form .termi_input{ width:calc(100% - 180px);}
+ .termi_search .termi_form .termi_input p{ height:35px;}
+ .termi_search .termi_form .termi_input input{ height:35px; line-height:35px;}
+ .termi_search .termi_form .btn{ width:80px;}
+ .termi_search .termi_btn{ text-align:left;}
+ .termi_search .termi_btn a,
+ .termi_search .termi_btn button{ margin:0 3px 3px 0; width:25px; height:25px; line-height:25px; text-align:center;}
+
+ .all_climate_info_wrap {margin-top:-80px; margin-bottom:80px;}
+ .airport_more .plain_guide { padding-right:40px; }
+}
+
+@media (max-width:767px){
+ .airport_weather_info .airport_temp .tm_inner_bottom .time_item { display:block; }
+ .wea_air_temp { width:40%; }
+ .wea_air_info { width:60%; }
+ .wea_air_temp .wea_air_wthr { display:block; }
+ .wea_air_temp .wea_air_text { display:block; text-align:center; }
+ .wea_air_temp .wea_air_wthr span[class^='mtph'], .wea_air_temp .wea_air_wthr span[class*=' mtph'] { margin:auto; float:none;}
+
+ .airport_temp_info .temp_tit{ font-size:15px; }
+ .airport_temp_info .temp_tit p{ font-size:20px;}
+ .airport_temp_info .temp_tit p b{ font-size:22px;}
+
+ .airport_temp_info .temp_con ul li{ width:50%;}
+ .airport_temp_info .temp_con ul li:nth-child(n+3) { margin-top:20px; }
+
+ .airport_weather_info .korea_airports ul li { width:33%; }
+ .airport_weather_info .korea_airports ul li { display:flex; }
+ .airport_weather_info .korea_airports ul li a { display:flex; width:100%; align-items:center; justify-content:center;}
+
+ .all_climate_info_wrap {margin-top:-110px; margin-bottom:110px;}
+ .all_climate_info_wrap.wwis-climate { margin-top:-60px; margin-bottom:60px;}
+
+ .airport_wmo_info { flex-wrap:wrap; }
+ .airport_wmo_info .wwis-source { width:100%; justify-content:center; }
+ .airport_wmo_info .norms-info { width:100%; justify-content:center; margin-top:20px; }
+}
+
+@media (max-width:440px){
+ .all_climate_info_wrap {margin-top:-90px; margin-bottom:90px;}
+ .all_climate_info_wrap.wwis-climate { margin-top:-46px; margin-bottom:46px;}
+}
+

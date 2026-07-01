@@ -1,0 +1,146 @@
+#sub-contents {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.sub-search {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+    padding: 8px;
+    background-color: #f4f7fc;
+}
+
+.sub-search>span {
+    cursor: pointer;
+}
+
+.sub-search>span:hover {
+    color: #244D70;
+}
+
+.sub-search .port-info {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    color: #244D70;
+}
+
+.port-info>div {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* ========== weather_info_wrap ========== */
+/* temp */
+.temp_info_wrap {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.temp_info_wrap>div {
+    width: 50%;
+    border: 1px solid #cbd7e6;
+    border-radius: 12px;
+}
+
+.temp_info_wrap>div .temp_header {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 16px;
+    border-bottom: 1px solid #cbd7e6;
+}
+
+.temp_info_wrap>div .temp_header h3 {
+    font-weight: bold;
+}
+
+.temp_info_wrap>div .temp_header .date {
+        position: initial !important;
+}
+
+.temp_info_wrap>div .temp_header .date a {
+    font-size: 14px;
+    color: #777677;
+}
+
+.temp_info_wrap>div .airport_temp {
+    padding: 8px 16px;
+}
+
+.temp_info_wrap>div .time_temp {
+    border-bottom: 1px solid #cbd7e6;
+}
+
+.temp_info_wrap>div .time_temp img {
+    width: 100%;
+}
+
+.temp_info_wrap>div .text_info>div {
+    min-height: 85px;
+    display: table;
+    width: 100%;
+}
+
+.temp_info_wrap>div .text_info .HWO {
+    border-bottom: 1px solid #cbd7e6;
+}
+
+.temp_info_wrap>div .text_info>div>div {
+    display: table-cell;
+    padding: 16px;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+.bl_tit {
+    min-width: 125px;
+    width: 20%;
+    align-content: center;
+    white-space: nowrap;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* table */
+.port-info_wrap {
+    display: none;
+}
+
+.port-info_wrap .table_over {
+    height: 500px;
+    overflow-y: auto;
+    border-top: 1px solid #21649c;
+    border-bottom: 1px solid #21649c;
+}
+
+.port-info_wrap .table_over table {
+    border-top: none;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table_st1 table thead {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.condi {
+    padding: 0px 12px;
+    font-size: 14px;
+}
+
+
+/* end */
+.travle_weather.sub_cscenter {
+    margin: 40px 0 40px !important;
+}

@@ -1,0 +1,178 @@
+@charset "utf-8";
+
+@font-face {
+	font-family: 'noto_l';
+	font-style: normal;
+	font-weight: normal;
+	src: local(※),
+		url('../fonts/NotoSans-Light.eot'),
+		url('../fonts/NotoSans-Light.woff') format('woff'),
+		url('../fonts/NotoSans-Light.otf') format('opentype'),
+		url('../fonts/NotoSans-Light.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/NotoSans-Light.woff2') format('woff2'),
+		url('../fonts/NotoSans-Light.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'n_sq';
+	font-style: normal;
+	font-weight: normal;
+	src: local(※),
+		url('../fonts/NanumSquareR.eot'),
+		url('../fonts/NanumSquareR.woff') format('woff'),
+		url('../fonts/NanumSquareR.otf') format('opentype'),
+		url('../fonts/NanumSquareR.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/NanumSquareR.woff2') format('woff2'),
+		url('../fonts/NanumSquareR.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'n_sq';
+	font-style: normal;
+	font-weight: 700;
+	src: local(※),
+		url('../fonts/NanumSquareB.eot'),
+		url('../fonts/NanumSquareB.woff') format('woff'),
+		url('../fonts/NanumSquareB.otf') format('opentype'),
+		url('../fonts/NanumSquareB.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/NanumSquareB.woff2') format('woff2'),
+		url('../fonts/NanumSquareB.ttf') format('truetype');
+}
+html, body, div, p, span, strong, b, em, iframe, pre,
+h1, h2, h3, h4, h5, h6,
+img, dl, dt, dd,
+fieldset, form, legend, label, table, caption, thead, tbody, tfoot, tr, th, td, button,
+ul, ol, li, a, input, select, textarea {margin: 0;padding: 0; border: 0 none; font-family: 'n_sq'; font-size:17px; letter-spacing:-0.02em;}
+li, li span, li strong, li p {font-size:17px;}
+/* select {padding-bottom:2px; box-sizing: content-box; -moz-box-sizing:content-box; -webkit-box-sizing:content-box;} */
+h1, h2, h3, h4, h5, h6, strong {font-weight:normal; font-family:'n_sq';}
+
+body {font-family: 'n_sq', MalgunGothic, '맑은 고딕','돋움', Dotum, AppleGothic, Sans-serif, Arial; font-size: 17px; line-height: 1.5; color: #111; }
+* {-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;}
+legend,hr,caption {position: absolute;overflow: hidden;width: 1px !important;height:1px !important;margin: -1px !important;line-height: 0 !important;border: 0;clip: rect(0 0 0 0); font-size:0;}
+button { border: none; cursor: pointer; }
+input[type='submit'],input[type='button'] {cursor:pointer;}
+ul, ol, li {list-style: none; word-break: break-all;}
+em, address {font-style: normal;}
+img {border: 0 none; font-size: 0;line-height: 0;}
+sup {position: relative;top: 2px;font-size: 11px;line-height: 100%;}
+textarea {box-sizing: border-box; resize: none; border: 1px solid #dfdfdf; padding:5px;}
+caption {overflow: hidden;width: 0;height: 0;font-size: 0; line-height: 0;}
+th, td { vertical-align: middle;/* white-space: nowrap */}
+p {line-height:1.6em;}
+
+a {color: #333; text-decoration: none; line-height: 1;}
+a:hover, a:focus, a:active {}
+a:visited {}
+*, html {box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; }
+*, *:before, *:after {box-sizing: border-box;-webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+
+/* table */
+table{ border:none; border-spacing:0; border-collapse:collapse;}
+table tr td,
+table tr th{ font-weight:normal; text-align:left; vertical-align:middle;}
+
+hr{ margin:0; padding:0; border:0; background:0; width:100%; background-color:#ccc; height:1px;}
+
+/* float */
+.fl {float:left !important;}
+.fr {float:right !important;}
+.clear {clear:both !important;}
+
+/* background img */
+.backimg{ background-position:50% 50%; background-repeat:no-repeat; background-size:cover;}
+
+/* button */
+a:visited, button:visited{ color:#111;}
+a:hover, button:hover{ color:#111;}
+
+li a:hover,
+td a:hover{ background:none;}
+
+.btns{ width:100%; text-align:center; margin-top:70px; margin-bottom:50px; overflow:hidden;}
+.btns.right{ text-align:right;}
+.btns.left{ text-align:left;}
+.btns .right{ float:right;}
+.btns .left{ float:left;}
+a.btn,
+button.btn{ display:inline-block; text-align:center; font-size:9pt; vertical-align:middle; margin:3px 3px 3px 3px;}
+a.btn.radi,
+button.btn.radi{ border-radius:7px;}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+select{ height:42px; line-height:42px; width:240px; background-color:#fff; border-radius:5px; float:left; border:1px solid #ddd; box-sizing:border-box; padding:0 10px;}
+
+/* bt size style */
+a.bt_micro,
+button.bt_micro{ padding:3px 5px; font-size:0.75em; font-weight:bold;}
+a.bt_small,
+button.bt_small{ padding:0 10px; height:20px; line-height:20px; font-size:0.85em;}
+a.bt_normal,
+button.bt_normal{ padding:0 18px; height:42px; line-height:42px; font-size:17px;}
+a.bt_big,
+button.bt_big{ padding:0 50px; height:42px; line-height:42px; font-size:17px;}
+a.bt_biger,
+button.bt_biger{ padding:0 80px; height:60px; line-height:60px; font-size:17px;}
+a.bt_full,
+button.bt_full{ padding:0; height:50px; line-height:50px; width:100%; box-sizing:border-box; margin:0; font-size:20px;}
+a.bt_half,
+button.bt_half{ padding:0; height:50px; line-height:50px; width:50%; margin:0 auto; margin:0; font-size:20px;}
+
+/* bt bg style */
+.bg_red{ background-color:#f04124; color:#fff !important;}
+.bg_red:hover{ background-color:#dd381d; color:#fff !important;}
+.bg_orange{ background-color:#f79750; color:#fff !important;}
+.bg_orange:hover{ background-color:#e06f1b; color:#fff !important;}
+.bg_green{ background-color:#43ac6a; color:#fff !important;}
+.bg_green:hover{ background-color:#389d5e; color:#fff !important;}
+.bg_yellow{ background-color:#ffc700; color:#000 !important;}
+.bg_yellow:hover{ background-color:#eab90b; color:#000 !important;}
+.bg_blue{ background-color:#21649c; color:#fff !important;}
+.bg_blue:hover{ background-color:#17588e; color:#fff !important;}
+.bg_sky{ background-color:#7299b5; color:#fff !important;}
+.bg_sky:hover{ background-color:#5884a4; color:#fff !important;}
+.bg_mint{ background-color:#00a5ac; color:#fff !important;}
+.bg_mint:hover{ background-color:#01969c; color:#fff !important;}
+.bg_pink{ background-color:#ff8e8e; color:#fff !important;}
+.bg_pink:hover{ background-color:#f18080; color:#fff !important;}
+.bg_wgray{ background-color:#fafafa; color:#777;}
+.bg_wgray:hover{ background-color:#ececec; color:#777;}
+.bg_gray{ background-color:#ccc; color:#fff !important;}
+.bg_gray:hover{ background-color:#bbbbbb; color:#fff !important;}
+.bg_dgray{ background-color:#666; color:#fff !important;}
+.bg_dgray:hover{ background-color:#424242; color:#fff !important;}
+.bg_white{ background-color:#fff !important; color:#777;}
+.bg_white:hover{ background-color:#f1f1f1; color:#777;}
+.bg_black{ background-color:#000; color:#fff !important;}
+.bg_black:hover{ background-color:#434343; color:#fff !important;}
+.border{ border:1px solid #ddd; box-sizing:border-box;}
+.border:hover{ border:1px solid #aaa; background-color:#fafafa;}
+
+/* skip_nav */
+.skip_nav{position:relative;width:100%;z-index:99999;}
+.skip_nav a{position:absolute;left:0;top:-1000px;display:block;width:100%;padding:14px 0; font-style:normal; font-variant:normal;text-align:center;font-size:17px;;color:#ffffff;background:#21649C;}
+.skip_nav a:active,
+.skip_nav a:focus{top:0;text-decoration:none;color:#ffffff;}
+
+@media (max-width:959px){
+	/* bt size style */
+	a.bt_micro,
+	button.bt_micro{ padding:3px 5px; font-size:0.75em; font-weight:bold;}
+	a.bt_small,
+	button.bt_small{ padding:0 10px; height:20px; line-height:20px; font-size:0.85em;}
+	a.bt_normal,
+	button.bt_normal{ padding:0 15px; height:35px; line-height:35px; font-size:14px;}
+	a.bt_big,
+	button.bt_big{ padding:0 20px; height:50px; line-height:50px; font-size:16px;}
+	a.bt_biger,
+	button.bt_biger{ padding:0 40px; height:50px; line-height:50px; font-size:16px;}
+	a.bt_full,
+	button.bt_full{ padding:0; height:50px; line-height:50px; width:100%; box-sizing:border-box; margin:0; font-size:16px;}
+	a.bt_half,
+	button.bt_half{ padding:0; height:50px; line-height:50px; width:50%; margin:0 auto; margin:0; font-size:16px;}
+}

@@ -1,0 +1,80 @@
+/*
+ * 운항재개정보, 비정상 운항 표출 관련
+ * 위즈아이
+ * 2024.10.18
+ * ===============================
+ *
+ *         <style type="text/css">
+        	.ui-tooltip { padding:10px 20px; color:#333; border-radius:5px; background:#FFFDF5; max-width:600px; }
+        	.ui-widget-shadow { opacity: 1; }
+        </style>
+ */
+
+/*
+ * 함수명 : tooltip 생성
+ * 인 자 : this(클릭된 요소),message(tooltip에 추가될 content 내용)
+ * 설 명 :
+ * 작성자 : 위즈아이
+ * 작성일 : 2024.10.18
+ */
+function createTooltip(element, message){
+    // 툴팁을 표시하기 전에 기존에 표시된 다른 툴팁을 숨김
+    $(".custom-tooltip").remove();
+
+    // 클릭된 요소의 위치를 기준으로 툴팁을 동적으로 생성하여 추가
+    element.after('<div class="custom-tooltip ui-tooltip">' + message + '</div>');
+
+    // 생성한 툴팁에 스타일 및 위치 설정
+    var tooltip = $(".custom-tooltip");
+    tooltip.css({
+        position: "absolute",
+        right: element.position().left - 8,
+    });
+
+    // 클릭 이벤트를 사용하여 툴팁을 닫기
+    $(document).on("click", function(event) {
+        if (!$(event.target).closest(".rsonCode, .custom-tooltip").length) {
+            $(".custom-tooltip").remove();
+        }
+    });
+}
+
+/*
+ * 함수명 : 위험기상 조회
+ * 인 자 : stnCd(iata 공항코드.ICN), tm(스케줄 시각.2021/11/17 0000), rsonCode(사유), stat(지연 및 결항 정보)
+ * 반 환 : String(운항 재개정보 안내 문구)
+ * 설 명 : 인자 및 url 호출 결과의 변수들을 조합하여, 항공기의 운항 재개 정보 문구를 생산 및 반환함.
+ * 작성자 : 위즈아이
+ * 작성일 : 2024.10.18
+ */
+async function getDangerousWeather(stnCd, tm, rsonCode, stat) {
+    let message = "";
+
+    if (stat === "결항") {
+        message = "해당 항공기는 " + rsonCode + "사유로 인해 결항되었습니다. 사정에 따라 실제 항공기 운항 여부와 차이가 날 수 있습니다. 자세한 운항 사항은 항공사에 문의하시기 바랍니다.";
+    } else if (stat === "지연") {
+        try {
+            const response = await $.ajax({
+                type: "get",
+                url: "/flight/api/flightStatus.do",
+                data: { 'airportCode': stnCd, 'tm': tm },
+                dataType: "json"
+            });
+            if (response.status.code === '200') {
+                let airportKor = response.item.airportKor;
+                let cnlTm = response.item.cnlTm;
+                if (airportKor && cnlTm) { //두 변수가 유효한 값일때,
+                    message = airportKor + " " + rsonCode + " 사유로 인해 지연 중입니다. " + cnlTm + " 이후 운항이 가능한 날씨가 될 것으로 예상됩니다. 사정에 따라 실제 항공기 운항 여부와 차이가 날 수 있습니다. 자세한 운항 사항은 항공사에 문의하시기 바랍니다.";
+                } else {
+                    message = "해당 항공기의 운항 재개정보가 존재하지 않습니다.";
+                }
+            }else{ //기타 오류 코드 일 때,
+                message = "해당 항공기의 운항 재개정보가 존재하지 않습니다.";
+            }
+        } catch (error) { //서버 오류 일 때,
+            message = "운항 재개정보 조회가 불가능합니다.";
+        }
+    }
+
+    return message;
+}

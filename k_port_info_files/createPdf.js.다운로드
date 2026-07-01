@@ -1,0 +1,102 @@
+	(function($) {
+		$("#generatePDF").click(function() {
+			$("#loading").show();
+			setTimeout(function() {
+				createPdf();
+			}, 100);
+		});
+		
+		$("#printPage").click(function() {
+			$("#loading").show();
+			setTimeout(function() {
+				printPdf();
+			}, 100);
+		});
+		
+		function createPdf() {
+			html2canvas(document.querySelector("#wrap")).then(function(canvas) {
+				// base64 url 로 변환
+				var imgData = canvas.toDataURL('image/jpeg');
+			
+				var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+				var pageHeight = imgWidth * 1.414; // 출력 페이지 세로 길이 계산 A4 기준
+				var imgHeight = canvas.height * imgWidth / canvas.width;
+				var heightLeft = imgHeight;
+				var margin = 0;
+			
+				var doc = new jsPDF('p', 'mm', 'a4');
+				var position = 0;
+			
+				// 첫 페이지 출력
+				doc.addImage(imgData, 'jpeg', margin, position, imgWidth, imgHeight);
+				heightLeft -= pageHeight;
+			
+				// 한 페이지 이상일 경우 루프 돌면서 출력
+				while (heightLeft >= 20) {
+					position = heightLeft - imgHeight;
+					doc.addPage();
+					doc.addImage(imgData, 'jpeg', margin, position, imgWidth, imgHeight);
+					heightLeft -= pageHeight;
+				}
+			
+				// 파일 저장
+				doc.save($('title').text() + '-screenshot.pdf');
+			});
+		}
+		function printPdf() {
+			html2canvas(document.querySelector("#wrap")).then(function(canvas) {
+				// base64 url 로 변환
+				var imgData = canvas.toDataURL('image/jpeg');
+			
+				var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+				var pageHeight = imgWidth * 1.414; // 출력 페이지 세로 길이 계산 A4 기준
+				var imgHeight = canvas.height * imgWidth / canvas.width;
+				var heightLeft = imgHeight;
+				var margin = 0;
+			
+				var doc = new jsPDF('p', 'mm', 'a4');
+				var position = 0;
+			
+				// 첫 페이지 출력
+				doc.addImage(imgData, 'jpeg', margin, position, imgWidth, imgHeight);
+				heightLeft -= pageHeight;
+			
+				// 한 페이지 이상일 경우 루프 돌면서 출력
+				while (heightLeft >= 20) {
+					position = heightLeft - imgHeight;
+					doc.addPage();
+					doc.addImage(imgData, 'jpeg', margin, position, imgWidth, imgHeight);
+					heightLeft -= pageHeight;
+				}
+			
+				doc.autoPrint();
+				
+				const hiddFrame = document.createElement('iframe');
+				hiddFrame.style.position = 'fixed';
+				// "visibility: hidden" would trigger safety rules in some browsers like safari，
+				// in which the iframe display in a pretty small size instead of hidden.
+				// here is some little hack ~
+				hiddFrame.style.width = '1px';
+				hiddFrame.style.height = '1px';
+				hiddFrame.style.opacity = '0.01';
+				const isSafari = /^((?!chrome|android).)*safari/i.test(window.navigator.userAgent);
+				if (isSafari) {
+				  // fallback in safari
+				  hiddFrame.onload = () => {
+					window.setTimeout(function() {
+						try {
+					      hiddFrame.contentWindow.document.execCommand('print', false, null);
+					    } catch (e) {
+					      hiddFrame.contentWindow.print();
+					    }
+					},10);
+				    
+				  };
+				}
+				hiddFrame.src = doc.output('bloburl');
+				document.body.appendChild(hiddFrame);
+
+			});
+		}
+	})(jQuery);
+	

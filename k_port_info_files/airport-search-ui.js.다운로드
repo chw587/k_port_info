@@ -1,0 +1,413 @@
+/* 공항 검색 */
+(function($, window, document){
+	var AirportSearchUI = function(wrapper, opts) {
+		var $wrapper = $(wrapper);
+		var options = { lang: 'ko' };
+		if(opts) options = Object.assign(options, opts);
+		var lang = options.lang;
+		var SELECT_TYPE = "select-type",
+			KEYWORD_TYPE = "keyword-type",
+			HISTORY_KEY = "search-history",
+			DOMESTIC_HISTORY_KEY = "domestic-search-history";
+		var searchAirportHistory = [];
+		var currentType = KEYWORD_TYPE;
+		var selectedAirport;
+		var searchTimer = null;
+		var waiting = false;
+		var lastQuery;
+		var currentPage = 1;
+		var DOMESTIC_AIRPORTS = {
+			"ko": {
+				"RKJJ": "광주 공항",
+				//"RKJK": "군산 공항",
+				"RKSS": "김포 국제공항",
+				"RKPK": "김해 국제공항",
+				"RKTN": "대구 국제공항",
+				"RKJB": "무안 국제공항",
+				"RKPS": "사천 공항",
+				"RKNY": "양양 국제공항",
+				"RKJY": "여수 공항",
+				"RKPU": "울산 공항",
+				"RKNW": "원주 공항",
+				"RKSI": "인천 국제공항",
+				"RKPC": "제주 국제공항",
+				"RKTU": "청주 국제공항",
+				"RKTH": "포항 공항",
+			},"en": {
+				"RKJJ": "GWANGJU Airport",
+				//"RKJK": "GUNSAN Airport",
+				"RKSS": "GIMPO Int'l Airport",
+				"RKPK": "GIMHAE Airport",
+				"RKTN": "DAEGU Airport",
+				"RKJB": "MUAN Airport",
+				"RKPS": "SACHEON Airport",
+				"RKNY": "YANGYANG Airport",
+				"RKJY": "YEOSU Airport",
+				"RKPU": "ULSAN Airport",
+				"RKNW": "WONJU Airport",
+				"RKSI": "INCHEON Int'l Airport",
+				"RKPC": "JEJU Int'l Airport",
+				"RKTU": "CHEONGJU Int'l Airport",
+				"RKTH": "POHANG Airport",
+			}
+		};
+		initUI();
+
+		function initUI() {
+			$wrapper.find('form').on('submit', function(e) {e.preventDefault(); });
+			var $keywordTypeCheck = $wrapper.find('a.chk_label[data-name="' + KEYWORD_TYPE + '"]');
+			var $selectTypeCheck = $wrapper.find('a.chk_label[data-name="' + SELECT_TYPE + '"]');
+
+			$keywordTypeCheck.attr("data-checked", true);
+			$keywordTypeCheck.addClass("active").attr('title','선택됨');
+			$selectTypeCheck.attr("data-checked", false);
+			$selectTypeCheck.removeClass("active");
+
+			$wrapper.on('click', 'a.chk_label[data-name="' + SELECT_TYPE + '"], a.chk_label[data-name="' + KEYWORD_TYPE + '"]', function(e) {
+				e.preventDefault();
+				var name = $(this).attr('data-name');
+				var checked = this.checked;
+				if(name == KEYWORD_TYPE) {
+					$keywordTypeCheck.addClass("active").attr('title','선택됨');
+					$selectTypeCheck.removeClass("active").attr('title','');
+				} else if(name == SELECT_TYPE) {
+					$keywordTypeCheck.removeClass("active").attr('title','');
+					$selectTypeCheck.addClass("active").attr('title','선택됨');
+				}
+
+				toggleInputUI({ type: name });
+			});
+			initKeywordUI();
+
+			$wrapper.find('button[name="search"]').on('click', function(e){
+				e.preventDefault();
+				readSelectedAirport();
+				if(selectedAirport != null && selectedAirport.icao) {
+					saveHistory();
+					window.location.href = getContext() + (lang=='en'?'eng/':'weather/') + 'airport.do?icaoCode=' + selectedAirport.icao;
+				} else {
+					alert(lang == 'en' ? "Select airport": "조회하실 공항을 선택하세요.");
+					$wrapper.find('input[name="q"]').first().trigger('focus');
+				}
+			});
+			$(document).click(function(e){
+				if($(e.target).parents('.airport-search-result').length == 0
+					&& $(e.target).attr('name') != 'q'){
+					$wrapper.find('.airport-search-result').hide();
+				} ;
+			});
+		}
+		function readHistory() {
+			var history = store.get(HISTORY_KEY);
+			if(history) {
+				//2026-05-12 군산공항 전문 미수신으로 임시 제외
+			    var tempHistory = [];
+				for(var ap of history){
+					if(ap.icao != 'RKJK'){
+						tempHistory.push(ap);
+					}
+				}
+				searchAirportHistory = tempHistory;	
+			}
+			return searchAirportHistory;
+		}
+		function readSelectedAirport() {
+			if(currentType == KEYWORD_TYPE) {
+
+			} else if(currentType == SELECT_TYPE) {
+				var $select = $wrapper.find('.airport-search-select select').eq(1);
+				var icao = $select.prop('value');
+				var name =  $select.find('option:checked').attr('data-name');
+				var nameEng = $select.find('option:checked').attr('data-name-eng');
+				if(icao && name && nameEng) {
+					selectedAirport = { icao: icao, name: name, nameEng: nameEng};
+				} else {
+					selectedAirport = null;
+				}
+			}
+			console.log(selectedAirport);
+		}
+		function saveHistory() {
+			if(!selectedAirport || !selectedAirport.icao || !selectedAirport.name || !selectedAirport.nameEng) {
+				return false;
+			}
+			for(var i = 0 ; i < searchAirportHistory.length ; i++) {
+				if(searchAirportHistory[i].icao == selectedAirport.icao) {
+					return;
+				}
+			}
+			if(searchAirportHistory.length >= 3) {
+				searchAirportHistory.splice(2, searchAirportHistory.length - 2);
+			}
+			searchAirportHistory.unshift(Object.assign({}, selectedAirport));
+			store.set(HISTORY_KEY, searchAirportHistory);
+
+			if(DOMESTIC_AIRPORTS[lang][selectedAirport.icao]) {
+				var domesticAirportHistory = store.get(DOMESTIC_HISTORY_KEY);
+				if(!domesticAirportHistory) {
+					domesticAirportHistory = {};
+				}
+				domesticAirportHistory[selectedAirport.icao] = new Date();
+				store.set(DOMESTIC_HISTORY_KEY, domesticAirportHistory);
+			}
+			return true;
+		}
+		function toggleInputUI(opts) {
+			if(KEYWORD_TYPE == opts.type) {
+				$wrapper.find('.airport-search-keyword').show();
+				$wrapper.find('.airport-search-select').hide();
+				currentType = KEYWORD_TYPE;
+				initKeywordUI();
+			} else if(SELECT_TYPE == opts.type) {
+				$wrapper.find('.airport-search-keyword').hide();
+				$wrapper.find('.airport-search-select').show();
+				currentType = SELECT_TYPE;
+				initSelectUI();
+			}
+		}
+
+		function initSelectUI() {
+			var $selects = $wrapper.find('.airport-search-select select');
+			var $selectBtn = $wrapper.find('.btn-select');
+			var $selectOptions =  $wrapper.find('.airport-search-select .main-select-option');
+			//var continent = "아시아태평양"; //$selects.eq(0)[0].value;
+			var country = "대한민국"; //$selects.eq(0)[0].value;
+			var icaoCode = "RKSI"; // $selects.eq(1)[0].value;
+			querySelects(country,function(data) {
+				if(data) {
+					for(var i = 0 ; i < data.length ; i++) {
+						var item = data[i];
+						var $s = $selects.eq(i).empty();
+						for(var j = 0 ; j < item.length ; j++) {
+							var option = item[j];
+							
+							//2026-05-12 군산공항 전문 미수신으로 임시 제외
+							if(option[1] != 'RKJK'){
+							var $o = $('<option>').attr('value', option[1]).attr('data-name',option[0]).attr('data-name-eng',option[2]).text(lang=="en" ? option[2] : option[0]);
+							if(i == 0) {
+								if(country == option[1]) {
+									$o.attr('selected','selected');
+								}
+							} else if(i == 1) {
+								if(icaoCode == option[1]) {
+									$o.attr('selected','selected');
+								}
+							}
+							$o.appendTo($s);							
+							}
+						}
+					}
+				}
+			});
+			
+			$selectOptions.on('change', function(e) {
+				e.preventDefault();
+				var $selects = $wrapper.find('.airport-search-select select');
+				//var continent = $selects.eq(0)[0].value;
+				var country = $selects.eq(0)[0].value;
+				var icaoCode = $selects.eq(1)[0].value;
+				var airportName = $selects.eq(1).find('option:checked').attr('data-name');
+				var name = $(this).attr('name');
+				if(name == "country") {
+					querySelects(country, function(data) {
+						if(data) {
+							for(var i = 1 ; i < data.length ; i++) {
+								var item = data[i];
+								var $s = $selects.eq(i).empty();
+								for(var j = 0 ; j < item.length ; j++) {
+									var option = item[j];
+									$('<option>').attr('value', option[1]).attr('data-name',option[0]).attr('data-name-eng',option[2]).text(lang=="en" ? option[2] : option[0]).appendTo($s);
+								}
+							}
+						}
+					});
+				} else if(name == "airport") {
+					// do nothing
+				}
+			});
+			$selectBtn.on('click', function(e){
+				e.preventDefault();
+				var $selects = $wrapper.find('.airport-search-select select');
+				//var continent = $selects.eq(0)[0].value;
+				var country = $selects.eq(0)[0].value;
+				var icaoCode = $selects.eq(1)[0].value;
+				var airportName = $selects.eq(1).find('option:checked').attr('data-name');
+				var name = $(this).attr('data-name');
+				if(name == "country") {
+					querySelects(country, function(data) {
+						if(data) {
+							for(var i = 1 ; i < data.length ; i++) {
+								var item = data[i];
+								var $s = $selects.eq(i).empty();
+								for(var j = 0 ; j < item.length ; j++) {
+									var option = item[j];
+									$('<option>').attr('value', option[1]).attr('data-name',option[0]).attr('data-name-eng',option[2]).text(lang=="en" ? option[2] : option[0]).appendTo($s);
+								}
+							}
+						}
+					});
+				} else if(name == "airport") {
+					// do nothing
+				}
+			});
+			
+		}
+
+		function initKeywordUI() {
+			readHistory();
+			renderAirportHistory();
+			var $queryInput = $wrapper.find('input[name="q"]');
+			$queryInput.on('keyup',function(e) {
+				if(e.keyCode == 13){
+					startQuery();
+				} else {
+					startQueryDelayed(500);
+				}
+				selectedAirport = null;
+			});
+			$queryInput.on('focus',function(e) {
+				if(this.value) {
+					showSearchBoxDropdown();
+				}
+			});
+			$wrapper.on('click', '.airport-search-result a.airport-item', function(e) {
+				e.preventDefault();
+				var icao = $(this).attr('data-icao');
+				var name = $(this).attr('data-name');
+				var nameEng = $(this).attr('data-name-eng');
+				selectedAirport = { icao: icao, name: name, nameEng: nameEng};
+				$queryInput.val(lang == 'en' ? nameEng : name);
+				$wrapper.find('.airport-search-result').hide();
+				$wrapper.find('button[name="search"]').trigger('focus');
+			});
+			if($queryInput.val() != '') startQuery();
+		}
+		function startQueryDelayed(delay) {
+			if(searchTimer != null) {
+				window.clearTimeout(searchTimer);
+				searchTimer = null;
+			}
+			searchTimer = window.setTimeout(function() {
+				var query = $wrapper.find('input[name="q"]').val();
+				currentPage = 1;
+				if(searchAirport(query, currentPage)) {
+					showSearchBoxDropdown();
+				}
+				searchTimer = null;
+			},delay);
+		}
+		function startQuery(query, page) {
+			if(waiting) return;
+			if(searchTimer != null) {
+				window.clearTimeout(searchTimer);
+				searchTimer = null;
+			}
+			searchTimer = window.setTimeout(function() {
+				if(!query) {
+					query = $wrapper.find('input[name="q"]').val();
+				}
+				currentPage = page ? page : 1;
+				if(searchAirport(query, currentPage)) {
+					showSearchBoxDropdown();
+				}
+				searchTimer = null;
+			}, 0);
+		}
+		function searchAirport(query, page) {
+			if(!query) return false;
+			airports(query, page).then(function(result) {
+				renderAirportResult(result);
+			},function(err) {
+				console.log(err);
+			});
+			lastQuery = query;
+			return true;
+		}
+		function airports(query, page) {
+			return $.ajax({
+				url: getContext() + "rest/world-airport/search.do",
+				data: {q: query, page: page},
+				dataType: "json"
+			});
+		}
+		function renderAirportResult(result) {
+			var $resultHolder = $wrapper.find('.airport-search-result');
+			if(currentPage == 1) $resultHolder.empty();
+			else $resultHolder.find('.more-airport').remove();
+			var resultCount = 0;
+			for(var i = 0 ; i < result.length ; i++) {
+				var item = result[i];
+				if(!item.icao || !item.airportKor || !item.airportEng) continue;
+				var html = '<li><a href="#" title="공항선택" class="airport-item" data-icao="' + item.icao + '" data-name="' + item.airportKor + '" data-name-eng="' + item.airportEng + '">';
+				if(lang == "en") {
+					html += item.airportEng + '(' + item.icao + ') - ' + item.cityEng + ',' + item.countryEng + '</a></li>';
+				} else {
+					html += item.airportKor + '(' + item.icao + ') - ' + item.cityKor + ',' + item.countryKor + '</a></li>';
+				}
+				resultCount++;
+				$resultHolder.append(html);
+			}
+			if(resultCount >= 20) {
+				// more data
+				var html = lang == "en" ? '<li><a href="#" class="more-airport"><strong>+</strong><span>More</span></a></li>': '<li><a href="#" class="more-airport"><strong>+</strong><span>더보기</span></a></li>';
+				$resultHolder.append(html);
+				$resultHolder.find('.more-airport').on('click', function(e) {
+					e.preventDefault();
+					searchAirport(lastQuery, ++currentPage);
+				});
+			} else if(currentPage == 1 && resultCount == 0) {
+				// no data
+				var html = lang == "en" ? '<li><span class="no-airports">No result.</span></li>' : '<li><span class="no-airports">해당하는 공항을 찾을 수 없습니다.</span></li>';
+				$resultHolder.append(html);
+			}
+			if(currentPage == 1 && result.length == 1) {
+				// set auto select
+				selectedAirport = { icao: result[0].icao, name: result[0].airportKor, nameEng: result[0].airportEng};
+			} else {
+				selectedAirport = null;
+			}
+
+		}
+		function showSearchBoxDropdown() {
+			$wrapper.find('.airport-search-result').show();
+		}
+		function renderAirportHistory() {
+			var $historyWrapper = $wrapper.find('.airport-query-history');
+			$historyWrapper.empty();
+			if(searchAirportHistory && searchAirportHistory.length > 0) {
+				for(var i = 0 ; i < searchAirportHistory.length ; i++) {
+				var item = searchAirportHistory[i];
+				$('<a>').attr('href',getContext() + (lang=='en'?'eng/':'weather/') + 'airport.do?icaoCode=' + item.icao)
+					.attr('data-icao', item.icao)
+					.attr('data-name', item.name) 
+					.attr('data-name-eng', item.nameEng)
+					.html((lang=='en' ? item.nameEng : item.name) + "(" + item.icao + ")").appendTo($historyWrapper);
+				if(i < searchAirportHistory.length - 1) {
+					$historyWrapper.append(', ');
+				}
+			}
+			} else {
+				$historyWrapper.html(lang == 'en' ? 'Empty.' : '없음.');
+			}
+		}
+		function querySelects(country, callback) {
+			var param = { country: country };
+			$.ajax({
+				url: getContext() + 'rest/world-airport/selects.do',
+				data: param
+			}).then( function(data) {
+				if(typeof callback === "function") {
+					callback(data);
+				}
+			}, function(err) {
+				console.log(err);
+			});
+		}
+		function getContext() {
+			return "/";
+		}
+	}
+
+    if (typeof exports !== 'undefined') exports.AirportSearchUI = AirportSearchUI;
+    else window.AirportSearchUI = AirportSearchUI;
+})(jQuery, window, document);

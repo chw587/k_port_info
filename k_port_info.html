@@ -1,0 +1,3117 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)https://amo.kma.go.kr/weather/airport.do -->
+<html lang="ko" class=" localstorage">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, target-densitydpi=medium-dpi">
+    <title>인천공항 날씨 &gt; 항공날씨정보 &gt; 항공기상청</title>
+
+    <!-- default -->
+    <link rel="preload" href="./k_port_info_files/images/main/main_sl_img.webp" as="image" fetchpriority="high"
+        type="image/webp">
+    <link rel="stylesheet" type="text/css" href="./k_port_info_files/reset.css">
+    <link rel="stylesheet" type="text/css" href="./k_port_info_files/default.css">
+    <link rel="stylesheet" type="text/css" href="./k_port_info_files/weather-icon.css">
+
+
+    <script async="" src="./k_port_info_files/logger.v4.sol.js.다운로드"></script>
+    <script async="" src="./k_port_info_files/bstrk.sol.js.다운로드"></script>
+    <script src="./k_port_info_files/jquery-3.4.1.min.js.다운로드"></script>
+    <script src="./k_port_info_files/jquery-ui.min.js.다운로드"></script>
+    <script src="./k_port_info_files/common.js.다운로드"></script>
+
+    <script src="./k_port_info_files/lodash.min.js.다운로드"></script>
+    <script src="./k_port_info_files/moment-with-locales.js.다운로드"></script>
+    <script src="./k_port_info_files/moment-timezone.js.다운로드"></script>
+    <script src="./k_port_info_files/store.modern.min.js.다운로드"></script>
+    <script src="./k_port_info_files/object-assign.js.다운로드"></script>
+    <script src="./k_port_info_files/mustache.min.js.다운로드"></script>
+
+
+
+    <meta name="group-title" content="항공날씨정보">
+    <meta name="page-title" content="공항날씨">
+    <!-- airport weather -->
+    <link rel="stylesheet" type="text/css" href="./k_port_info_files/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="./k_port_info_files/slick.css">
+    <link rel="stylesheet" type="text/css" href="./k_port_info_files/slick-theme.css">
+    <script src="./k_port_info_files/slick.js.다운로드"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="./k_port_info_files/_weather.css">
+
+
+    <link rel="stylesheet" type="text/css" href="./k_port_info_files/timeseries.css">
+    <script src="./k_port_info_files/scrollbooster.min.js.다운로드"></script>
+    <script src="./k_port_info_files/timeseries.js.다운로드"></script>
+    <script src="./k_port_info_files/highcharts.js.다운로드"></script>
+
+
+    <link rel="stylesheet" href="./k_port_info_files/ol.css" type="text/css">
+    <script src="./k_port_info_files/ol.js.다운로드"></script>
+    <script src="./k_port_info_files/flightInfo-tooltip.js.다운로드"></script>
+    <!-- flightInfo-tooltip.js와 함께 선언 -->
+    <style type="text/css">
+        .ui-tooltip {
+            padding: 10px 20px;
+            color: #333;
+            border-radius: 5px;
+            background: #FFFDF5;
+            max-width: 600px;
+        }
+
+        .ui-widget-shadow {
+            opacity: 1;
+        }
+    </style>
+    <!-- /flightInfo-tooltip.js와 함께 선언 -->
+    <!-- 
+        <script>
+            var lat = -999;
+            var lon = -999;
+            var rsonCheck=false;
+            $(document).ready(function(e) {
+                /* weather map open */
+                $(".airport_weather_info .airport_map_btn a").click(function(){
+                    $(this).toggleClass("active");
+                    $(".airport_weather_info .airport_map").toggleClass("active");
+                    if($(".airport_weather_info .airport_map").hasClass('active')) {
+                        if(typeof createAirportMap === 'function') {
+                            createAirportMap();
+                        }
+                    }
+                });
+            
+                setTimeout(timeOut, 600000);
+                
+            });
+            
+            var timeOut = function(){
+            	
+                window.location.reload();
+            }
+            
+            $(".rsonCode").on("click", function() {
+                var stnCd = $(this).data('stn');
+                var tm = $(this).data('date');
+                var rsonCode = $(this).data('rson');
+                var stat = $(this).data('stat');
+                getDangerousWeather(stnCd, tm, rsonCode, stat)
+                    .then(message => {
+                        createTooltip($(this), message); // 툴팁 생성
+                    });
+            });
+            
+            function state(){
+                var xhr = new XMLHttpRequest();
+                var url = "/frame/forecast.do";
+                xhr.open("POST",url,true);
+                xhr.send();
+                xhr.onreadystatechange = function(){
+                    consoloe.log("@@@@@",xhr.response);
+                    if(xhr.readystate==4 && xhr.status==200){
+                        $("#index-ts").append(
+                                
+                        )
+                    };  
+                    if(xhr.status==405){
+                        console.log(xhr.responseText)
+                        console.log("405에러")
+                        
+                    }
+                };
+            };
+        </script>
+         -->
+    <script>
+
+        var lat = -999;
+
+        var lon = -999;
+
+        var rsonCheck = false;
+
+        $(document).ready(function (e) {
+
+            $(".airport_weather_info .airport_map_btn a").click(function () {
+
+                $(this).toggleClass("active");
+
+                $(".airport_weather_info .airport_map").toggleClass("active");
+
+                if ($(".airport_weather_info .airport_map").hasClass('active')) {
+
+                    if (typeof createAirportMap === 'function') {
+
+                        createAirportMap();
+
+                    }
+
+                }
+
+            });
+
+
+
+            $(".rsonCode").on("click", function () {
+
+                var stnCd = $(this).data('stn');
+
+                var tm = $(this).data('date');
+
+                var rsonCode = $(this).data('rson');
+
+                var stat = $(this).data('stat');
+
+                getDangerousWeather(stnCd, tm, rsonCode, stat)
+
+                    .then(message => {
+
+                        createTooltip($(this), message);
+
+                    });
+
+            });
+
+
+
+            setTimeout(timeOut, 600000);
+
+        });
+
+
+
+        var timeOut = function () {
+
+            window.location.reload();
+
+        }
+
+
+
+        function state() {
+
+            var xhr = new XMLHttpRequest();
+
+            var url = "/frame/forecast.do";
+
+            xhr.open("POST", url, true);
+
+            xhr.send();
+
+            xhr.onreadystatechange = function () {
+
+                consoloe.log("@@@@@", xhr.response);
+
+                if (xhr.readystate == 4 && xhr.status == 200) {
+
+                    $("#index-ts").append(
+
+
+
+                    )
+
+                };
+
+                if (xhr.status == 405) {
+
+                    console.log(xhr.responseText)
+
+                    console.log("405에러")
+
+
+
+                }
+
+            };
+
+        };
+
+    </script>
+
+    <script>window.weatherAppBase = "https://www.weather.go.kr/w/"; </script>
+    <script src="./k_port_info_files/airport-search-ui.js.다운로드"></script>
+
+    <!-- 260626 희원 -->
+    <link rel="stylesheet" href="./k_port_info_files/new/new.css">
+    <script src="./k_port_info_files/new/new.js" defer></script>
+    <!-- 아이콘 -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <style>
+        .material-symbols-outlined {
+            font-size: 30px !important;
+            align-content: center;
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+</head>
+
+<body class="">
+    <h1 class="hide">인천공항 날씨 &gt; 항공날씨정보 &gt; 항공기상청</h1>
+    <div id="wrap">
+
+
+        <!-- 		<div class="skip_nav"> -->
+        <!-- 			<a href="#lnb_first" class="goto-menu" style="margin-top:3px;margin-left:3px;margin-right:3px;">주메뉴 바로가기</a> -->
+        <!-- 			<a href="#sub-contents" class="goto-content" style="margin-top:3px;margin-left:3px;margin-right:3px;">본문 바로가기</a> -->
+        <!-- 		</div> -->
+        <div id="header">
+            <div id="top_bar">
+                <div class="width_box">
+                    <div class="link_pop_box service_link">
+                        <a href="https://global.amo.go.kr/" target="_blank" title="새창열림">항공날씨 바로가기</a>
+                    </div><!-- service_link -->
+                    <div class="link_pop_box leng_link">
+                        <a title="한국어/영문 선택" style="cursor:pointer;"><span>KOR</span></a>
+                        <ul>
+                            <li><a href="https://amo.kma.go.kr/">KOR</a></li>
+                            <li><a href="https://amo.kma.go.kr/eng/" title="새창열림" target="_blank">ENG</a></li>
+                        </ul>
+                    </div><!-- leng_link -->
+                </div><!-- width_box -->
+            </div><!-- top_bar -->
+
+            <div class="header">
+
+                <div class="width_box">
+
+                    <h1><a href="https://amo.kma.go.kr/">
+                            <picture>
+                                <source srcset="./k_port_info_files/images/header/amo_logo_2021.webp" media="(min-width:0px)">
+                                <source srcset="./k_port_info_files/images/header/amo_logo_2021.png" media="(min-width:0px)">
+                                <img src="./k_port_info_files/amo_logo_2021.png" alt="책임운영기관 항공기상청">
+                            </picture>
+                        </a></h1>
+                    <div id="lnb">
+                        <!-- 항공기상청 최우수기관 -->
+                        <div class="mn_top_sub_img">
+                            <picture>
+                                <source srcset="./k_port_info_files/images/header/best_company_low.webp" media="(min-width:0px)">
+                                <source srcset="./k_port_info_files/images/header/best_company.png" media="(min-width:0px)">
+                                <img style="width:50px;height:60px;"
+                                    src="./k_port_info_files/best_company.png" alt="항공기상청 최우수기관 선정">
+                            </picture>
+                            <picture>
+                                <source srcset="./k_port_info_files/images/header/best_company2.webp" media="(min-width:0px)">
+                                <source srcset="./k_port_info_files/images/header/best_company2.png" media="(min-width:0px)">
+                                <img style="width:50px;height:51px;margin-left:10px"
+                                    src="./k_port_info_files/best_company2.png" alt="항공기상청 최우수기관 선정">
+                            </picture>
+                        </div>
+                        <ul>
+
+                            <li>
+
+
+                                <a class="menuDepth1" target="_self" id="lnb_first" style="cursor: pointer;">항공날씨정보</a>
+
+                                <ul class="sub_box d1-weather">
+                                    <li class="width_box">
+                                        <ul class="sub_con_box">
+                                            <li class="sub_item_row">
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link"
+                                                            href="https://amo.kma.go.kr/weather/airport.do"
+                                                            target="_self" style="">공항날씨</a>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li><a class="sub_link sub_link_wrap" style="">날씨영상</a>
+                                                        <ul style="display: none;">
+
+
+                                                            <li><a href="https://amo.kma.go.kr/weather/image/sat.do"
+                                                                    target="_self" style="">위성</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/weather/image/tdwr.do"
+                                                                    target="_self" style="">공항기상레이더</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/weather/image/radar.do"
+                                                                    target="_blank" title="새창열림" style="">기상레이더</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/weather/image/lgt.do"
+                                                                    target="_self" style="">낙뢰</a></li>
+
+
+                                                            <li>
+
+                                                                <a class="sub_link_depth3"
+                                                                    href="https://www.weather.go.kr/w/image/chart/forecast.do"
+                                                                    target="_blank" title="새창열림" style="">수치일기도</a>
+
+
+                                                            </li>
+
+
+
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li><a class="sub_link sub_link_wrap" style="">항공기상정보</a>
+                                                        <ul style="display: none;">
+
+
+                                                            <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-info1.do"
+                                                                    target="_self" style="">공항기상정보</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-info2.do"
+                                                                    target="_self" style="">항공교통흐름지원정보</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-space-nmsc.do"
+                                                                    target="_self" style="">우주기상(국가위성센터)</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-space-icao.do"
+                                                                    target="_self" style="">우주기상(ICAO)</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-radioactivity.do"
+                                                                    target="_self" style="">방사능</a></li>
+
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link"
+                                                            href="https://amo.kma.go.kr/weather/typhoon.do"
+                                                            target="_self" style="">태풍정보</a>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li><a class="sub_link sub_link_wrap" style="">항공기상통계</a>
+                                                        <ul style="display: none;">
+
+
+                                                            <li><a href="https://amo.kma.go.kr/weather/stat/stat-hourly.do"
+                                                                    target="_self" style="">시간자료</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/weather/stat/stat-monthly.do"
+                                                                    target="_self" style="">일자료</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/weather/stat/airport-climate.do"
+                                                                    target="_self" style="">항공기후정보</a></li>
+
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link"
+                                                            href="https://amo.kma.go.kr/weather/dictionary.do"
+                                                            target="_self" style="">항공기상용어사전</a>
+                                                    </li>
+                                                </ul>
+
+
+
+                                            </li>
+                                        </ul>
+
+
+                                        <div class="sub_tit_box">
+                                            <b>항공날씨정보</b>
+                                            <p>항공날씨와관련 다양한 정보를<br>제공합니다.</p>
+                                            <div class="menu_icon">
+                                                <picture>
+                                                    <source srcset="./k_port_info_files/images/header/sub_icon1.webp"
+                                                        media="(min-width:0px)">
+                                                    <source srcset="./k_port_info_files/images/header/sub_icon1.png"
+                                                        media="(min-width:0px)">
+                                                    <img src="./k_port_info_files/sub_icon1.png" alt="">
+                                                </picture>
+                                            </div>
+                                        </div><!-- sub_tit_box -->
+
+
+
+
+
+
+
+
+                                    </li>
+                                </ul>
+
+
+
+                            </li><!-- mobile_menu -->
+
+                            <li>
+
+
+                                <a class="menuDepth1" target="_self" style="cursor:pointer;">운항영향정보</a>
+
+                                <ul class="sub_box d1-flight">
+                                    <li class="width_box">
+                                        <ul class="sub_con_box">
+                                            <li class="sub_item_row">
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+                                                        <a class="sub_link"
+                                                            href="https://amo.kma.go.kr/flight/flightInfo.do"
+                                                            target="_self">운항영향정보</a>
+
+                                                    </li>
+                                                </ul>
+
+
+
+                                            </li>
+                                        </ul>
+
+
+
+                                        <div class="sub_tit_box">
+                                            <b>운항영향정보</b>
+                                            <p>출도착공항의 운항영향정보를<br> 제공합니다.</p>
+                                            <div class="menu_icon">
+                                                <picture>
+                                                    <source srcset="./k_port_info_files/images/header/sub_icon1.webp"
+                                                        media="(min-width:0px)">
+                                                    <source srcset="./k_port_info_files/images/header/sub_icon1.png"
+                                                        media="(min-width:0px)">
+                                                    <img src="./k_port_info_files/sub_icon1.png" alt="">
+                                                </picture>
+                                            </div><!-- menu_icon -->
+                                        </div><!-- sub_tit_box -->
+
+
+
+
+
+
+
+                                    </li>
+                                </ul>
+
+
+
+                            </li><!-- mobile_menu -->
+
+                            <li>
+
+
+                                <a class="menuDepth1" target="_self" style="cursor:pointer;">정보공개</a>
+
+                                <ul class="sub_box d1-data">
+                                    <li class="width_box">
+                                        <ul class="sub_con_box">
+                                            <li class="sub_item_row">
+
+
+
+                                                <ul class="sub_item">
+                                                    <li><a class="sub_link sub_link_wrap">행정정보공개</a>
+                                                        <ul style="display: none;">
+
+
+                                                            <li><a href="https://amo.kma.go.kr/data/open/system-guide.do"
+                                                                    target="_self">정보공개제도 안내</a></li>
+
+
+                                                            <li>
+
+
+                                                                <a href="https://amo.kma.go.kr/data/open/public/public-info1.do"
+                                                                    target="_self">공개 행정정보</a>
+
+                                                            </li>
+
+
+
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link" href="https://amo.kma.go.kr/data/data.do"
+                                                            target="_self">공공데이터 개방</a>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link" href="https://amo.kma.go.kr/data/pds.do"
+                                                            target="_self">자료실</a>
+                                                    </li>
+                                                </ul>
+
+
+
+                                            </li>
+                                        </ul>
+
+
+
+
+                                        <div class="sub_tit_box">
+                                            <b>정보공개</b>
+                                            <p>항공기상청의 다양한 정보공개 내역을 확인 하실 수 있습니다.</p>
+                                            <div class="menu_icon">
+                                                <picture>
+                                                    <source srcset="./k_port_info_files/images/header/sub_icon2.webp"
+                                                        media="(min-width:0px)">
+                                                    <source srcset="./k_port_info_files/images/header/sub_icon2.png"
+                                                        media="(min-width:0px)">
+                                                    <img src="./k_port_info_files/sub_icon2.png" alt="">
+                                                </picture>
+                                            </div><!-- menu_icon -->
+                                        </div><!-- sub_tit_box -->
+
+
+
+
+
+
+                                    </li>
+                                </ul>
+
+
+
+                            </li><!-- mobile_menu -->
+
+                            <li>
+
+
+                                <a class="menuDepth1" target="_self" style="cursor:pointer;">국민참여</a>
+
+                                <ul class="sub_box d1-participation">
+                                    <li class="width_box">
+                                        <ul class="sub_con_box">
+                                            <li class="sub_item_row">
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+                                                        <a class="sub_link"
+                                                            href="https://www.epeople.go.kr/nep/pttn/gnrlPttn/pttnSmlrCaseList.npaid"
+                                                            target="_blank">국민참여 마당</a>
+
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+                                                        <a class="sub_link" href="https://minwon.kma.go.kr/main/main.do"
+                                                            target="_blank">전자민원</a>
+
+                                                    </li>
+                                                </ul>
+
+
+
+                                            </li>
+                                        </ul>
+
+
+
+
+
+                                        <div class="sub_tit_box">
+                                            <b>국민참여</b>
+                                            <p>국민의 말씀을 경청하는<br>항공기상청이 되겠습니다.</p>
+                                            <div class="menu_icon">
+                                                <picture>
+                                                    <source srcset="./k_port_info_files/images/header/sub_icon3.webp"
+                                                        media="(min-width:0px)">
+                                                    <source srcset="./k_port_info_files/images/header/sub_icon3.png"
+                                                        media="(min-width:0px)">
+                                                    <img src="./k_port_info_files/sub_icon3.png" alt="">
+                                                </picture>
+                                            </div><!-- menu_icon -->
+                                        </div><!-- sub_tit_box -->
+
+
+
+
+
+                                    </li>
+                                </ul>
+
+
+
+                            </li><!-- mobile_menu -->
+
+                            <li>
+
+
+                                <a class="menuDepth1" target="_self" style="cursor:pointer;">알림·자료</a>
+
+                                <ul class="sub_box d1-information">
+                                    <li class="width_box">
+                                        <ul class="sub_con_box">
+                                            <li class="sub_item_row">
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link"
+                                                            href="https://amo.kma.go.kr/information/notice.do"
+                                                            target="_self">공지사항</a>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link"
+                                                            href="https://amo.kma.go.kr/information/photonews.do"
+                                                            target="_self">포토뉴스</a>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link"
+                                                            href="https://amo.kma.go.kr/information/press.do"
+                                                            target="_self">보도자료</a>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link"
+                                                            href="https://amo.kma.go.kr/information/law.do"
+                                                            target="_self">법령·지침</a>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link"
+                                                            href="https://amo.kma.go.kr/information/airtimes.do"
+                                                            target="_self">항공기상 간행물</a>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link"
+                                                            href="https://amo.kma.go.kr/information/voc.do"
+                                                            target="_self">고객 요구사항(VOC)</a>
+                                                    </li>
+                                                </ul>
+
+
+
+                                            </li>
+                                        </ul>
+
+
+
+
+
+
+                                        <div class="sub_tit_box">
+                                            <b>알림·자료</b>
+                                            <p>보다 정확하고 신속한 정보를 제공하겠습니다.</p>
+                                            <div class="menu_icon">
+                                                <picture>
+                                                    <source srcset="./k_port_info_files/images/header/sub_icon4.webp"
+                                                        media="(min-width:0px)">
+                                                    <source srcset="./k_port_info_files/images/header/sub_icon4.png"
+                                                        media="(min-width:0px)">
+                                                    <img src="./k_port_info_files/sub_icon4.png" alt="">
+                                                </picture>
+                                            </div><!-- menu_icon -->
+                                        </div><!-- sub_tit_box -->
+
+
+
+
+                                    </li>
+                                </ul>
+
+
+
+                            </li><!-- mobile_menu -->
+
+                            <li>
+
+
+                                <a class="menuDepth1" target="_self" style="cursor:pointer;">항공기상청소개</a>
+
+                                <ul class="sub_box d1-amo">
+                                    <li class="width_box">
+                                        <ul class="sub_con_box">
+                                            <li class="sub_item_row">
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link" href="https://amo.kma.go.kr/amo/greeting.do"
+                                                            target="_self">청장인사말</a>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link" href="https://amo.kma.go.kr/amo/mission.do"
+                                                            target="_self">미션 및 비전</a>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link" href="https://amo.kma.go.kr/amo/history.do"
+                                                            target="_self">기관연혁</a>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link" href="https://amo.kma.go.kr/amo/org.do"
+                                                            target="_self">조직도</a>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li><a class="sub_link sub_link_wrap">주요업무</a>
+                                                        <ul style="display: none;">
+
+
+                                                            <li><a href="https://amo.kma.go.kr/amo/business/intro01.do"
+                                                                    target="_self">항공기상업무 수행체계</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/amo/business/intro02.do"
+                                                                    target="_self">관측업무</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/amo/business/intro03.do"
+                                                                    target="_self">예경보업무</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/amo/business/intro04.do"
+                                                                    target="_self">항공예보철지원업무</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/amo/business/intro05.do"
+                                                                    target="_self">국제업무</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/amo/business/intro06.do"
+                                                                    target="_self">항공기상교육훈련</a></li>
+
+
+                                                            <li><a href="https://amo.kma.go.kr/amo/business/intro07.do"
+                                                                    target="_self">주요장비 및 시스템 소개</a></li>
+
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link" href="https://amo.kma.go.kr/amo/iso.do"
+                                                            target="_self">ISO 인증</a>
+                                                    </li>
+                                                </ul>
+
+
+
+
+
+
+                                                <ul class="sub_item">
+                                                    <li>
+
+                                                        <a class="sub_link" href="https://amo.kma.go.kr/amo/map.do"
+                                                            target="_self">찾아오시는 길</a>
+                                                    </li>
+                                                </ul>
+
+
+
+                                            </li>
+                                        </ul>
+
+
+
+
+
+
+
+                                        <div class="sub_tit_box">
+                                            <b>항공기상청소개</b>
+                                            <p>‘하늘을 친구처럼, 국민을 하늘처럼’<br>국민과 함께하는 항공기상청을<br>소개합니다.</p>
+                                            <div class="menu_icon">
+                                                <picture>
+                                                    <source srcset="./k_port_info_files/images/header/sub_icon5.webp"
+                                                        media="(min-width:0px)">
+                                                    <source srcset="./k_port_info_files/images/header/sub_icon5.png"
+                                                        media="(min-width:0px)">
+                                                    <img src="./k_port_info_files/sub_icon5.png" alt="">
+                                                </picture>
+                                            </div><!-- menu_icon -->
+                                        </div><!-- sub_tit_box -->
+
+
+
+                                    </li>
+                                </ul>
+
+
+
+                            </li><!-- mobile_menu -->
+
+
+                        </ul>
+
+                    </div><!-- #lnb -->
+
+
+
+                    <div class="header_iconbox">
+                        <a href="javascript:void(0);" class="top_search_btn">
+                            <picture>
+                                <source srcset="./k_port_info_files/images/header/header_search_icon.webp" media="(min-width:0px)">
+                                <source srcset="./k_port_info_files/images/header/header_search_icon.png" media="(min-width:0px)">
+                                <img src="./k_port_info_files/header_search_icon.png" alt="">
+                            </picture>
+                            <span class="hide">공항검색</span>
+                        </a>
+                        <div class="top_search">
+                            <a href="https://amo.kma.go.kr/weather/airport.do#" class="serach_close">
+                                <picture>
+                                    <source srcset="./k_port_info_files/images/header/sub_close.webp" media="(min-width:0px)">
+                                    <source srcset="./k_port_info_files/images/header/sub_close.png" media="(min-width:0px)">
+                                    <img src="./k_port_info_files/sub_close.png" alt="">
+                                </picture>
+                                <span class="hide">공항검색 닫기</span>
+                            </a>
+                            <div class="width_box airport-search-ui" id="global-airport-search-ui">
+                                <div class="main_sls_title">
+                                    <b>공항날씨</b>
+                                </div><!-- main_sls_title -->
+                                <div class="main_sls_form">
+                                    <div>
+                                        <div class="chk_box">
+                                            <p class="input_chk"><a href="https://amo.kma.go.kr/weather/airport.do#"
+                                                    class="chk_label active" data-name="keyword-type"
+                                                    data-checked="true" title="선택됨">키워드 검색</a></p>
+                                            <p class="input_chk"><a href="https://amo.kma.go.kr/weather/airport.do#"
+                                                    class="chk_label" data-name="select-type" data-checked="false">목록
+                                                    검색</a></p>
+                                        </div><!-- chk_box -->
+                                        <div class="input_box airport-search-keyword">
+                                            <input type="text" name="q" placeholder="세계 공항명 또는 공항코드를 입력하세요."
+                                                title="검색어">
+                                            <ul class="airport-search-result"></ul>
+                                            <p class="search_text">최근 조회 공항 - <span class="airport-query-history"><a
+                                                        href="https://amo.kma.go.kr/weather/airport.do?icaoCode=RKSI"
+                                                        data-icao="RKSI" data-name="인천 국제공항"
+                                                        data-name-eng="Incheon International Airport">인천
+                                                        국제공항(RKSI)</a></span></p>
+                                        </div><!-- input_box -->
+                                        <div class="input_box airport-search-select" style="display:none;">
+                                            <!-- 
+											<div>
+												<b><label for="global-select-continent">대륙 선택</label></b>
+												<select id="global-select-continent" name="continent">
+													<option value="">선택</option>
+												</select>
+												<button class="btn-select" data-name="continent">선택</button>
+											</div> -->
+                                            <div>
+                                                <b><label for="global-select-country">국가 선택</label></b>
+                                                <select id="global-select-country" name="country">
+                                                    <option value="">선택</option>
+                                                </select>
+                                                <button class="btn-select" data-name="country">선택</button>
+                                            </div>
+                                            <div>
+                                                <b><label for="global-select-airport">공항 선택</label></b>
+                                                <select id="global-select-airport" name="airport">
+                                                    <option value="">선택</option>
+                                                </select>
+                                            </div>
+                                            <p class="search_text">최근 조회 공항 - <span class="airport-query-history"><a
+                                                        href="https://amo.kma.go.kr/weather/airport.do?icaoCode=RKSI"
+                                                        data-icao="RKSI" data-name="인천 국제공항"
+                                                        data-name-eng="Incheon International Airport">인천
+                                                        국제공항(RKSI)</a></span></p>
+                                        </div><!-- input_box -->
+                                        <div class="button_box">
+                                            <button name="search">조회</button>
+                                        </div><!-- button_box -->
+                                    </div>
+                                </div><!-- main_sls_form -->
+                            </div>
+                        </div><!-- top_search -->
+                        <a class="top_sitemap_btn" href="https://amo.kma.go.kr/weather/airport.do#">
+                            <div style="display:none;">&nbsp;</div>
+                            <picture>
+                                <source srcset="./k_port_info_files/images/header/header_sitemap_icon.webp" media="(min-width:0px)">
+                                <source srcset="./k_port_info_files/images/header/header_sitemap_icon.png" media="(min-width:0px)">
+                                <img src="./k_port_info_files/header_sitemap_icon.png" alt="">
+                            </picture>
+                        </a>
+                        <div class="top_sitemap">
+                            <a class="sitemap_close" href="https://amo.kma.go.kr/weather/airport.do#">
+                                <picture>
+                                    <source srcset="./k_port_info_files/images/header/sub_close.webp" media="(min-width:0px)">
+                                    <source srcset="./k_port_info_files/images/header/sub_close.png" media="(min-width:0px)">
+                                    <img src="./k_port_info_files/sub_close.png" alt="누리집 안내지도 닫기">
+                                </picture>
+                            </a>
+                            <div class="width_box">
+
+
+                                <div class="sitemap_row long_row sitemap-weather">
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit">항공날씨정보</h2>
+
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/weather/airport.do">공항날씨</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item ">
+                                        <h2 class="sitemap_tit"></h2>
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/weather/image/sat.do">날씨영상</a></h3>
+
+
+
+
+                                        <ul>
+
+
+                                            <li><a href="https://amo.kma.go.kr/weather/image/sat.do"
+                                                    target="_self">위성</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/weather/image/tdwr.do"
+                                                    target="_self">공항기상레이더</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/weather/image/radar.do"
+                                                    target="_blank">기상레이더</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/weather/image/lgt.do"
+                                                    target="_self">낙뢰</a></li>
+
+                                            <li><a href="https://www.weather.go.kr/w/image/chart/forecast.do"
+                                                    target="_blank">수치일기도</a></li>
+
+
+                                        </ul>
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item ">
+                                        <h2 class="sitemap_tit"></h2>
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/weather/aviation/aviation-info1.do">항공기상정보</a>
+                                        </h3>
+
+
+
+
+                                        <ul>
+
+
+                                            <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-info1.do"
+                                                    target="_self">공항기상정보</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-info2.do"
+                                                    target="_self">항공교통흐름지원정보</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-space-nmsc.do"
+                                                    target="_self">우주기상(국가위성센터)</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-space-icao.do"
+                                                    target="_self">우주기상(ICAO)</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-radioactivity.do"
+                                                    target="_self">방사능</a></li>
+
+                                        </ul>
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/weather/typhoon.do">태풍정보</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item ">
+                                        <h2 class="sitemap_tit"></h2>
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/weather/stat/stat-hourly.do">항공기상통계</a></h3>
+
+
+
+
+                                        <ul>
+
+
+                                            <li><a href="https://amo.kma.go.kr/weather/stat/stat-hourly.do"
+                                                    target="_self">시간자료</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/weather/stat/stat-monthly.do"
+                                                    target="_self">일자료</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/weather/stat/airport-climate.do"
+                                                    target="_self">항공기후정보</a></li>
+
+                                        </ul>
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/weather/dictionary.do">항공기상용어사전</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                </div><!-- sitemap_row -->
+
+                                <div class="sitemap_row long_row sitemap-flight">
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit">운항영향정보</h2>
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/flight/flightInfo.do">운항영향정보</a></h3>
+
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                </div><!-- sitemap_row -->
+
+                                <div class="sitemap_row long_row sitemap-data">
+
+                                    <div class="sitemap_item ">
+                                        <h2 class="sitemap_tit">정보공개</h2>
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/data/open/system-guide.do">행정정보공개</a></h3>
+
+
+
+
+                                        <ul>
+
+
+                                            <li><a href="https://amo.kma.go.kr/data/open/system-guide.do"
+                                                    target="_self">정보공개제도 안내</a></li>
+
+                                            <li><a href="https://amo.kma.go.kr/data/open/public/public-info1.do"
+                                                    target="_self">공개 행정정보</a></li>
+
+
+                                        </ul>
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a href="https://amo.kma.go.kr/data/data.do">공공데이터
+                                                개방</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a href="https://amo.kma.go.kr/data/pds.do">자료실</a>
+                                        </h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                </div><!-- sitemap_row -->
+
+                                <div class="sitemap_row long_row sitemap-participation">
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit">국민참여</h2>
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://www.epeople.go.kr/nep/pttn/gnrlPttn/pttnSmlrCaseList.npaid">국민참여
+                                                마당</a></h3>
+
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://minwon.kma.go.kr/main/main.do">전자민원</a></h3>
+
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                </div><!-- sitemap_row -->
+
+                                <div class="sitemap_row long_row sitemap-information">
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit">알림·자료</h2>
+
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/information/notice.do">공지사항</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/information/photonews.do">포토뉴스</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/information/press.do">보도자료</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/information/law.do">법령·지침</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/information/airtimes.do">항공기상 간행물</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/information/voc.do">고객 요구사항(VOC)</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                </div><!-- sitemap_row -->
+
+                                <div class="sitemap_row long_row sitemap-amo">
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit">항공기상청소개</h2>
+
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/amo/greeting.do">청장인사말</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a href="https://amo.kma.go.kr/amo/mission.do">미션 및
+                                                비전</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/amo/history.do">기관연혁</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a href="https://amo.kma.go.kr/amo/org.do">조직도</a>
+                                        </h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item ">
+                                        <h2 class="sitemap_tit"></h2>
+
+                                        <h3 style="margin-left:3px;"><a
+                                                href="https://amo.kma.go.kr/amo/business/intro01.do">주요업무</a></h3>
+
+
+
+
+                                        <ul>
+
+
+                                            <li><a href="https://amo.kma.go.kr/amo/business/intro01.do"
+                                                    target="_self">항공기상업무 수행체계</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/amo/business/intro02.do"
+                                                    target="_self">관측업무</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/amo/business/intro03.do"
+                                                    target="_self">예경보업무</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/amo/business/intro04.do"
+                                                    target="_self">항공예보철지원업무</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/amo/business/intro05.do"
+                                                    target="_self">국제업무</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/amo/business/intro06.do"
+                                                    target="_self">항공기상교육훈련</a></li>
+
+
+                                            <li><a href="https://amo.kma.go.kr/amo/business/intro07.do"
+                                                    target="_self">주요장비 및 시스템 소개</a></li>
+
+                                        </ul>
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a href="https://amo.kma.go.kr/amo/iso.do">ISO
+                                                인증</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                    <div class="sitemap_item leaf-item">
+                                        <h2 class="sitemap_tit"></h2>
+
+
+                                        <h3 style="margin-left:3px;"><a href="https://amo.kma.go.kr/amo/map.do">찾아오시는
+                                                길</a></h3>
+
+
+                                        <br>
+                                    </div><!-- sitemap_item -->
+
+                                </div><!-- sitemap_row -->
+
+                            </div><!-- width_box -->
+                        </div><!-- top_sitemap -->
+                    </div><!-- header_iconbox -->
+                </div><!-- width_box -->
+            </div><!-- header -->
+        </div><!-- header -->
+
+        <div id="m_header">
+            <div class="m_header">
+                <div class="lay_box">
+                    <h1><a href="https://amo.kma.go.kr/">
+                            <picture>
+                                <source srcset="./k_port_info_files/images/header/amo_logo_2021.webp" media="(min-width:0px)">
+                                <source srcset="./k_port_info_files/images/header/amo_logo_2021.png" media="(min-width:0px)">
+                                <img src="./k_port_info_files/amo_logo_2021.png" alt="책임운영기관 항공기상청">
+                            </picture>
+                            <span class="hide">홈</span>
+                        </a></h1>
+                    <div class="header_iconbox">
+                        <p class="top_search_btn">
+                            <picture>
+                                <source srcset="./k_port_info_files/images/header/header_search_icon.webp" media="(min-width:0px)">
+                                <source srcset="./k_port_info_files/images/header/header_search_icon.png" media="(min-width:0px)">
+                                <img src="./k_port_info_files/header_search_icon.png" alt="">
+                            </picture>
+                            <span class="hide">공항검색</span>
+                        </p>
+                        <div class="top_search">
+                            <p class="serach_close">
+                                <picture>
+                                    <source srcset="./k_port_info_files/images/header/sub_close.webp" media="(min-width:0px)">
+                                    <source srcset="./k_port_info_files/images/header/sub_close.png" media="(min-width:0px)">
+                                    <img src="./k_port_info_files/sub_close.png" alt="닫기">
+                                </picture>
+                            </p>
+                            <div class="width_box airport-search-ui" id="mobile-airport-search-ui">
+                                <div class="main_sls_title">
+                                    <b>공항날씨</b>
+                                </div><!-- main_sls_title -->
+                                <div class="main_sls_form">
+                                    <div>
+                                        <div class="chk_box">
+                                            <p class="input_chk"><a href="https://amo.kma.go.kr/weather/airport.do#"
+                                                    class="chk_label active" data-name="keyword-type"
+                                                    data-checked="true" title="선택됨">키워드 검색</a></p>
+                                            <p class="input_chk"><a href="https://amo.kma.go.kr/weather/airport.do#"
+                                                    class="chk_label" data-name="select-type" data-checked="false">목록
+                                                    검색</a></p>
+                                        </div><!-- chk_box -->
+                                        <div class="input_box airport-search-keyword">
+                                            <input type="text" name="q" placeholder="세계 공항명 또는 공항코드를 입력하세요."
+                                                title="검색어">
+                                            <ul class="airport-search-result"></ul>
+                                            <p class="search_text">최근 조회 공항 - <span class="airport-query-history"><a
+                                                        href="https://amo.kma.go.kr/weather/airport.do?icaoCode=RKSI"
+                                                        data-icao="RKSI" data-name="인천 국제공항"
+                                                        data-name-eng="Incheon International Airport">인천
+                                                        국제공항(RKSI)</a></span></p>
+
+                                        </div><!-- input_box -->
+                                        <div class="input_box airport-search-select" style="display:none;">
+                                            <!--
+											<div>
+												<b><label for="mobile-select-continent">대륙 선택</label></b>
+												<select id="mobile-select-continent" name="continent">
+													<option value="">선택</option>
+												</select>
+												<button class="btn-select" data-name="continent">선택</button>
+											</div> -->
+                                            <div>
+                                                <b><label for="mobile-select-country">국가 선택</label></b>
+                                                <select id="mobile-select-country" name="country">
+                                                    <option value="">선택</option>
+                                                </select>
+                                                <button class="btn-select" data-name="country">선택</button>
+                                            </div>
+                                            <div>
+                                                <b><label for="mobile-select-airport">공항 선택</label></b>
+                                                <select id="mobile-select-airport" name="airport">
+                                                    <option value="">선택</option>
+                                                </select>
+                                            </div>
+                                            <p class="search_text">최근 조회 공항 - <span class="airport-query-history"><a
+                                                        href="https://amo.kma.go.kr/weather/airport.do?icaoCode=RKSI"
+                                                        data-icao="RKSI" data-name="인천 국제공항"
+                                                        data-name-eng="Incheon International Airport">인천
+                                                        국제공항(RKSI)</a></span></p>
+                                        </div><!-- input_box -->
+                                        <div class="button_box">
+                                            <button name="search">조회</button>
+                                        </div><!-- button_box -->
+                                    </div>
+                                </div><!-- main_sls_form -->
+                            </div>
+                        </div><!-- top_search -->
+
+                        <a class="top_sitemap_btn" href="https://amo.kma.go.kr/weather/airport.do#">
+                            <picture>
+                                <source srcset="./k_port_info_files/images/header/header_sitemap_icon.webp" media="(min-width:0px)">
+                                <source srcset="./k_port_info_files/images/header/header_sitemap_icon.png" media="(min-width:0px)">
+                                <img src="./k_port_info_files/header_sitemap_icon.png" alt="">
+                            </picture>
+                            <span class="hide">누리집 안내지도</span>
+                        </a>
+                        <div class="top_sitemap" style="height: 1021px;">
+                            <p class="sitemap_home"><a href="https://amo.kma.go.kr/">
+                                    <picture>
+                                        <source srcset="./k_port_info_files/images/header/home_icon.webp" media="(min-width:0px)">
+                                        <source srcset="./k_port_info_files/images/header/home_icon.png" media="(min-width:0px)">
+                                        <img src="./k_port_info_files/home_icon.png" alt="">
+                                    </picture>
+                                    <span class="hide">홈</span>
+                                </a></p>
+                            <div class="site_leng">
+                                <a title="한국어/영문 선택"><span>KOR</span></a>
+                                <ul>
+                                    <li><a href="https://amo.kma.go.kr/">KOR</a></li>
+                                    <li><a href="https://amo.kma.go.kr/eng/">ENG</a></li>
+                                </ul>
+                            </div><!-- site_leng  -->
+                            <!-- side menu -->
+                            <p class="sitemap_close">
+                                <picture>
+                                    <source srcset="./k_port_info_files/images/header/sub_close_w.webp" media="(min-width:0px)">
+                                    <source srcset="./k_port_info_files/images/header/sub_close_w.png" media="(min-width:0px)">
+                                    <img src="./k_port_info_files/sub_close_w.png" alt="누리집 안내지도 닫기">
+                                </picture>
+                            </p>
+                            <div class="width_box">
+
+                                <div class="mobile_menu mobile_menu-weather">
+
+
+                                    <p class="m_big_tit">항공날씨정보</p>
+                                    <ul>
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/weather/airport.do"
+                                                target="_self">공항날씨</a></li>
+
+
+
+
+
+                                        <li>
+                                            <p class="m_small_tit">날씨영상</p>
+                                            <ul>
+
+
+                                                <li><a href="https://amo.kma.go.kr/weather/image/sat.do"
+                                                        target="_self">위성</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/weather/image/tdwr.do"
+                                                        target="_self">공항기상레이더</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/weather/image/radar.do"
+                                                        target="_blank">기상레이더</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/weather/image/lgt.do"
+                                                        target="_self">낙뢰</a></li>
+
+                                                <li><a href="https://www.weather.go.kr/w/image/chart/forecast.do"
+                                                        target="_blank">수치일기도</a></li>
+
+
+                                            </ul>
+                                        </li>
+
+
+
+
+
+
+                                        <li>
+                                            <p class="m_small_tit">항공기상정보</p>
+                                            <ul>
+
+
+                                                <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-info1.do"
+                                                        target="_self">공항기상정보</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-info2.do"
+                                                        target="_self">항공교통흐름지원정보</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-space-nmsc.do"
+                                                        target="_self">우주기상(국가위성센터)</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-space-icao.do"
+                                                        target="_self">우주기상(ICAO)</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-radioactivity.do"
+                                                        target="_self">방사능</a></li>
+
+                                            </ul>
+                                        </li>
+
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/weather/typhoon.do"
+                                                target="_self">태풍정보</a></li>
+
+
+
+
+
+                                        <li>
+                                            <p class="m_small_tit">항공기상통계</p>
+                                            <ul>
+
+
+                                                <li><a href="https://amo.kma.go.kr/weather/stat/stat-hourly.do"
+                                                        target="_self">시간자료</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/weather/stat/stat-monthly.do"
+                                                        target="_self">일자료</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/weather/stat/airport-climate.do"
+                                                        target="_self">항공기후정보</a></li>
+
+                                            </ul>
+                                        </li>
+
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/weather/dictionary.do"
+                                                target="_self">항공기상용어사전</a></li>
+
+
+
+                                    </ul>
+
+
+
+                                </div><!-- mobile_menu -->
+
+                                <div class="mobile_menu mobile_menu-flight">
+
+
+                                    <p class="m_big_tit">운항영향정보</p>
+                                    <ul>
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/flight/flightInfo.do"
+                                                target="_self">운항영향정보</a></li>
+
+
+
+
+                                    </ul>
+
+
+
+                                </div><!-- mobile_menu -->
+
+                                <div class="mobile_menu mobile_menu-data">
+
+
+                                    <p class="m_big_tit">정보공개</p>
+                                    <ul>
+
+
+
+                                        <li>
+                                            <p class="m_small_tit">행정정보공개</p>
+                                            <ul>
+
+
+                                                <li><a href="https://amo.kma.go.kr/data/open/system-guide.do"
+                                                        target="_self">정보공개제도 안내</a></li>
+
+                                                <li><a href="https://amo.kma.go.kr/data/open/public/public-info1.do"
+                                                        target="_self">공개 행정정보</a></li>
+
+
+                                            </ul>
+                                        </li>
+
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/data/data.do"
+                                                target="_self">공공데이터 개방</a></li>
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/data/pds.do"
+                                                target="_self">자료실</a></li>
+
+
+
+                                    </ul>
+
+
+
+                                </div><!-- mobile_menu -->
+
+                                <div class="mobile_menu mobile_menu-participation">
+
+
+                                    <p class="m_big_tit">국민참여</p>
+                                    <ul>
+
+
+
+
+                                        <li><a class="m_small_tit"
+                                                href="https://www.epeople.go.kr/nep/pttn/gnrlPttn/pttnSmlrCaseList.npaid"
+                                                target="_blank">국민참여 마당</a></li>
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://minwon.kma.go.kr/main/main.do"
+                                                target="_blank">전자민원</a></li>
+
+
+
+
+                                    </ul>
+
+
+
+                                </div><!-- mobile_menu -->
+
+                                <div class="mobile_menu mobile_menu-information">
+
+
+                                    <p class="m_big_tit">알림·자료</p>
+                                    <ul>
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/information/notice.do"
+                                                target="_self">공지사항</a></li>
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/information/photonews.do"
+                                                target="_self">포토뉴스</a></li>
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/information/press.do"
+                                                target="_self">보도자료</a></li>
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/information/law.do"
+                                                target="_self">법령·지침</a></li>
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/information/airtimes.do"
+                                                target="_self">항공기상 간행물</a></li>
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/information/voc.do"
+                                                target="_self">고객 요구사항(VOC)</a></li>
+
+
+
+                                    </ul>
+
+
+
+                                </div><!-- mobile_menu -->
+
+                                <div class="mobile_menu mobile_menu-amo">
+
+
+                                    <p class="m_big_tit">항공기상청소개</p>
+                                    <ul>
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/amo/greeting.do"
+                                                target="_self">청장인사말</a></li>
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/amo/mission.do"
+                                                target="_self">미션 및 비전</a></li>
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/amo/history.do"
+                                                target="_self">기관연혁</a></li>
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/amo/org.do"
+                                                target="_self">조직도</a></li>
+
+
+
+
+
+                                        <li>
+                                            <p class="m_small_tit">주요업무</p>
+                                            <ul>
+
+
+                                                <li><a href="https://amo.kma.go.kr/amo/business/intro01.do"
+                                                        target="_self">항공기상업무 수행체계</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/amo/business/intro02.do"
+                                                        target="_self">관측업무</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/amo/business/intro03.do"
+                                                        target="_self">예경보업무</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/amo/business/intro04.do"
+                                                        target="_self">항공예보철지원업무</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/amo/business/intro05.do"
+                                                        target="_self">국제업무</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/amo/business/intro06.do"
+                                                        target="_self">항공기상교육훈련</a></li>
+
+
+                                                <li><a href="https://amo.kma.go.kr/amo/business/intro07.do"
+                                                        target="_self">주요장비 및 시스템 소개</a></li>
+
+                                            </ul>
+                                        </li>
+
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/amo/iso.do"
+                                                target="_self">ISO 인증</a></li>
+
+
+
+
+
+
+
+                                        <li><a class="m_small_tit" href="https://amo.kma.go.kr/amo/map.do"
+                                                target="_self">찾아오시는 길</a></li>
+
+
+
+                                    </ul>
+
+
+
+                                </div><!-- mobile_menu -->
+
+                            </div><!-- width_box -->
+                        </div><!-- top_sitemap -->
+                    </div><!-- header_iconbox -->
+                </div><!-- lay_box -->
+            </div><!-- m_header -->
+        </div><!-- m_header -->
+        <div class="menu_area_bg"></div>
+        <div id="contants">
+
+            <div class="sub_wrap ">
+                <div class="sub_visual">
+                    <h2>항공날씨정보</h2>
+                </div><!-- sub_visual -->
+
+                <div class="sub_nav">
+                    <div class="width_box">
+                        <ul>
+                            <li class="nav_home"><a href="https://amo.kma.go.kr/" title="홈으로"></a></li>
+
+
+
+                            <li>
+
+
+                                <p><span><a href="https://amo.kma.go.kr/weather/airport.do"
+                                            target="_self">항공날씨정보</a></span></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div class="sub_cate category_1st">
+                                    <ul>
+
+
+                                        <li><a href="https://amo.kma.go.kr/weather/airport.do" target="_self">항공날씨정보</a>
+                                        </li>
+
+
+
+
+                                        <li><a href="https://amo.kma.go.kr/flight/flightInfo.do"
+                                                target="_self">운항영향정보</a></li>
+
+
+
+
+                                        <li><a href="https://amo.kma.go.kr/data/open/system-guide.do"
+                                                target="_self">정보공개</a></li>
+
+
+
+
+                                        <li><a href="https://amo.kma.go.kr/participation/citizen.do"
+                                                target="_self">국민참여</a></li>
+
+
+
+
+                                        <li><a href="https://amo.kma.go.kr/information/notice.do"
+                                                target="_self">알림·자료</a></li>
+
+
+
+
+                                        <li><a href="https://amo.kma.go.kr/amo/greeting.do" target="_self">항공기상청소개</a>
+                                        </li>
+
+
+
+
+
+                                    </ul>
+                                </div>
+                            </li>
+
+
+
+
+
+                            <li>
+
+
+
+                                <p><span><a href="https://amo.kma.go.kr/weather/airport.do"
+                                            target="_self">공항날씨</a></span></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div class="sub_cate category_1st">
+                                    <ul>
+
+
+
+                                        <li><a href="https://amo.kma.go.kr/weather/airport.do" target="_self">공항날씨</a>
+                                        </li>
+
+
+
+                                        <li><a href="https://amo.kma.go.kr/weather/image/sat.do" target="_self">날씨영상</a>
+                                        </li>
+
+
+
+
+                                        <li><a href="https://amo.kma.go.kr/weather/aviation/aviation-info1.do"
+                                                target="_self">항공기상정보</a></li>
+
+
+
+
+
+                                        <li><a href="https://amo.kma.go.kr/weather/typhoon.do" target="_self">태풍정보</a>
+                                        </li>
+
+
+
+                                        <li><a href="https://amo.kma.go.kr/weather/stat/stat-hourly.do"
+                                                target="_self">항공기상통계</a></li>
+
+
+
+
+
+                                        <li><a href="https://amo.kma.go.kr/weather/dictionary.do"
+                                                target="_self">항공기상용어사전</a></li>
+
+
+                                    </ul>
+                                </div>
+                            </li>
+
+
+
+
+
+
+
+                        </ul>
+                    </div><!-- width_box -->
+                </div><!-- sub_nav -->
+                <div class="sub_title">
+                    <div class="width_box">
+                        <div class="sub_tit_head">
+                            <h3>국내공항 여행 날씨</h3>
+                        </div><!-- sub_tit_head -->
+                        <!--  
+						<div class="sub_tit_sns">
+							<ul>
+								<li class="print_btn"><a href="#" id="printPage"><img src="./k_port_info_files/images/print_btn.png" alt="인쇄"></a></li>
+								<li class="sns_btn">
+									<a href="#"><img src="./k_port_info_files/images/share_btn.png" alt="공유" /></a>
+									<ul>
+										<li><a href="#" data-to="twitter" class="tw" title="새창열림"><img src="./k_port_info_files/images/sns_tw.png" alt="트위터"></a></li>
+										<li><a href="#" data-to="facebook" class="fb" title="새창열림"><img src="./k_port_info_files/images/sns_fb.png" alt="페이스북"></a></li>
+										
+										<li><a href="#" data-to="link" class="tt clipboard" data-clipboard-text=""><img src="./k_port_info_files/images/sns_sh.png" alt="링크복사"></a></li>
+									</ul>
+								</li>
+								<li class="pdf_down"><a href="#" id="generatePDF" title="PDF 다운로드">PDF 다운로드</a></li>
+							</ul>
+						</div>-->
+                        <!-- sub_tit_head -->
+                    </div><!-- width_box -->
+                </div><!-- sub_title -->
+
+                <!-- 260626 희원 -->
+                <div class="travle_weather" id="sub-contents" tabindex="-1">
+                    <div class="sub-search">
+                        <div class="start-port port-info">
+                            <span class="material-symbols-outlined">
+                                flight_takeoff
+                            </span>
+                            <div>
+                                <span><b>출발공항</b></span>
+                                <select id="depAirportSelect">
+                                    <option value="RKSI" data-name="인천" selected>인천공항</option>
+                                    <option value="RKSS" data-name="김포">김포공항</option>
+                                    <option value="RKPC" data-name="제주">제주공항</option>
+                                    <option value="RKNY" data-name="양양">양양공항</option>
+                                    <option value="RKNW" data-name="원주">원주공항</option>
+                                    <option value="RKTU" data-name="청주">청주공항</option>
+                                    <option value="RKTN" data-name="대구">대구공항</option>
+                                    <option value="RKTH" data-name="포항경주">포항경주공항</option>
+                                    <option value="RKJJ" data-name="광주">광주공항</option>
+                                    <option value="RKJB" data-name="무안">무안공항</option>
+                                    <option value="RKJY" data-name="여수">여수공항</option>
+                                    <option value="RKPU" data-name="울산">울산공항</option>
+                                    <option value="RKPK" data-name="김해">김해공항</option>
+                                    <option value="RKPS" data-name="사천">사천공항</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <span class="material-symbols-outlined" id="swapAirports">
+                            sync_alt
+                        </span>
+
+                        <div class="arrive-port port-info">
+                            <span class="material-symbols-outlined">
+                                flight_land
+                            </span>
+                            <div>
+                                <span><b>도착공항</b></span>
+                                <select id="arrAirportSelect">
+                                    <option value="RKSI" data-name="인천" selected>인천공항</option>
+                                    <option value="RKSS" data-name="김포">김포공항</option>
+                                    <option value="RKPC" data-name="제주">제주공항</option>
+                                    <option value="RKNY" data-name="양양">양양공항</option>
+                                    <option value="RKNW" data-name="원주">원주공항</option>
+                                    <option value="RKTU" data-name="청주">청주공항</option>
+                                    <option value="RKTN" data-name="대구">대구공항</option>
+                                    <option value="RKTH" data-name="포항경주">포항경주공항</option>
+                                    <option value="RKJJ" data-name="광주">광주공항</option>
+                                    <option value="RKJB" data-name="무안">무안공항</option>
+                                    <option value="RKJY" data-name="여수">여수공항</option>
+                                    <option value="RKPU" data-name="울산">울산공항</option>
+                                    <option value="RKPK" data-name="김해">김해공항</option>
+                                    <option value="RKPS" data-name="사천">사천공항</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="temp_info_wrap">
+                        <div class="start-port start-info">
+                            <div class="temp_header">
+                                <h3>"너무 더워요 조심하세요"</h3>
+                                <div class="date tm_issue_date"><a href="#">06.30.(화) 15:00 갱신 (현지시각)</a></div>
+                            </div>
+
+                            <div class="airport_temp">
+                                <div class="tm_inner_top">
+                                    <div class="wea_air_temp">
+                                        <p class="wea_air_wthr">
+                                            <span class="mtph02" title="구름조금" style="hight:99px;">
+                                                <br><br><br>햇빛쨍쨍
+                                            </span>
+                                        </p>
+
+                                        <p class="wea_air_text">
+                                            <b>28.8<sup>℃</sup></b>
+                                            <br>
+                                            체감(32.3℃)
+                                            <img src="./k_port_info_files/images/ic_sym_16.png" alt=""
+                                                style="width:20px; hight:20px; vertical-align: middle; margin-bottom: 4px;">
+
+
+                                        </p><!-- wea_air_text -->
+                                    </div><!-- wea_air_temp -->
+                                    <div class="wea_air_info">
+                                        <ul>
+                                            <li>풍향 : <b>동남</b></li>
+                                            <li>풍속 : <b>12 kt</b></li>
+                                            <li>시정 : <b>10 km ↑</b></li>
+                                            <li>운고 : <b>1,500 ft</b></li>
+                                            <li>일강수 : <b>- mm</b></li>
+
+                                        </ul>
+                                    </div><!-- wea_air_info -->
+                                </div><!-- tm_inner_top -->
+
+
+
+                            </div>
+
+                            <div class="time_temp">
+                                <img src="./temp_img.jpg" alt="time_temp">
+                            </div>
+
+                            <div class="text_info">
+                                <div class="HWO">
+                                    <div class="bl_tit">위험기상예보</div>
+                                    <div class="bl_content">(강수, 구름고도) 내일 밤부터 모레새벽 사이에 가끔 비가 내리겠고, 구름고도가 1,000ft 내외로 낮아질
+                                        때가 있겠습니다.</div>
+                                </div>
+                                <div class="Curr_Info">
+                                    <div class="bl_tit">정보현황</div>
+                                    <div class="bl_content">-</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="arrive-port arrive-info">
+                            <div class="temp_header">
+                                <h3>"오늘 대체로 맑음"</h3>
+                                <div class="date tm_issue_date"><a href="#">06.30.(화) 15:00 갱신 (현지시각)</a></div>
+                            </div>
+
+                            <div class="airport_temp">
+                                <div class="tm_inner_top">
+                                    <div class="wea_air_temp">
+                                        <p class="wea_air_wthr">
+                                            <span class="mtph02" title="구름조금" style="hight:99px;">
+                                                <br><br><br>구름조금
+                                            </span>
+                                        </p>
+
+                                        <p class="wea_air_text">
+                                            <b>24.8<sup>℃</sup></b>
+                                            <br>
+                                            체감(28.3℃)
+                                            <img src="./k_port_info_files/images/ic_sym_16.png" alt=""
+                                                style="width:20px; hight:20px; vertical-align: middle; margin-bottom: 4px;">
+
+
+                                        </p><!-- wea_air_text -->
+                                    </div><!-- wea_air_temp -->
+                                    <div class="wea_air_info">
+                                        <ul>
+                                            <li>풍향 : <b>북서</b></li>
+                                            <li>풍속 : <b>6 kt</b></li>
+                                            <li>시정 : <b>10 km ↑</b></li>
+                                            <li>운고 : <b>1,500 ft</b></li>
+                                            <li>일강수 : <b>- mm</b></li>
+
+                                        </ul>
+                                    </div><!-- wea_air_info -->
+                                </div><!-- tm_inner_top -->
+
+
+
+                            </div>
+
+                            <div class="time_temp">
+                                <img src="./temp_img.jpg" alt="time_temp">
+                            </div>
+
+                            <div class="text_info">
+                                <div class="HWO">
+                                    <div class="bl_tit">위험기상예보</div>
+                                    <div class="bl_content">-</div>
+                                </div>
+                                <div class="Curr_Info">
+                                    <div class="bl_tit">정보현황</div>
+                                    <div class="bl_content">-</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="port-info_wrap">
+                        <div class="table_st1 table_over">
+                            <table id="Abnormal_operation_information_table">
+                                <caption>비정상운항 정보</caption>
+                                <thead>
+                                    <tr>
+                                        <th colspan="7" style="text-align: start;"><b><span class="start-port">김포</span>
+                                                - <span class="arrive-port">제주</span>
+                                                도착 정보</b></th>
+                                    </tr>
+                                    <tr>
+                                        <th>항공사</th>
+                                        <th>편명</th>
+                                        <th>출발지</th>
+                                        <th>목적지</th>
+                                        <th>계획</th>
+                                        <th>예상</th>
+                                        <th>현황</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span>진에어</span></td>
+                                        <td><span>LJ509</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:00</span></td>
+                                        <td><span>14:10</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>대한항공</span></td>
+                                        <td><span>KE1107</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:00</span></td>
+                                        <td><span>13:56</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>티웨이항공</span></td>
+                                        <td><span>TW789</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:00</span></td>
+                                        <td><span>14:46</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>제주항공</span></td>
+                                        <td><span>7C155</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:00</span></td>
+                                        <td><span>14:14</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>아시아나항공</span></td>
+                                        <td><span>OZ8951</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:10</span></td>
+                                        <td><span>14:13</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>티웨이항공</span></td>
+                                        <td><span>TW785</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:15</span></td>
+                                        <td><span>14:23</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>제주항공</span></td>
+                                        <td><span>7C121</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:20</span></td>
+                                        <td><span>14:26</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>제주항공</span></td>
+                                        <td><span>7C125</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:25</span></td>
+                                        <td><span>14:40</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>대한항공</span></td>
+                                        <td><span>KE1113</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:30</span></td>
+                                        <td><span>14:46</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>제주항공</span></td>
+                                        <td><span>7C123</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:35</span></td>
+                                        <td><span>14:36</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>아시아나항공</span></td>
+                                        <td><span>OZ8953</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:35</span></td>
+                                        <td><span>14:32</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>대한항공</span></td>
+                                        <td><span>KE1121</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:40</span></td>
+                                        <td><span>14:39</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>이스타항공</span></td>
+                                        <td><span>ZE219</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:40</span></td>
+                                        <td><span>15:01</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>대한항공</span></td>
+                                        <td><span>KE1143</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>14:55</span></td>
+                                        <td><span>14:55</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>이스타항공</span></td>
+                                        <td><span>ZE221</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>15:00</span></td>
+                                        <td><span>15:30</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>에어서울</span></td>
+                                        <td><span>RS905</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>15:05</span></td>
+                                        <td><span>14:59</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>제주항공</span></td>
+                                        <td><span>7C127</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>15:05</span></td>
+                                        <td><span>15:05</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>아시아나항공</span></td>
+                                        <td><span>OZ8963</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>15:10</span></td>
+                                        <td><span>15:20</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>아시아나항공</span></td>
+                                        <td><span>OZ8021</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>15:15</span></td>
+                                        <td><span>15:15</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>에어부산</span></td>
+                                        <td><span>BX8021</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>15:15</span></td>
+                                        <td><span>15:15</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>티웨이항공</span></td>
+                                        <td><span>TW793</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>15:15</span></td>
+                                        <td><span>15:15</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>티웨이항공</span></td>
+                                        <td><span>TW789</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>15:15</span></td>
+                                        <td><span>15:37</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>진에어</span></td>
+                                        <td><span>LJ511</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>15:20</span></td>
+                                        <td><span>15:20</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>이스타항공</span></td>
+                                        <td><span>ZE275</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>15:20</span></td>
+                                        <td><span>15:25</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>이스타항공</span></td>
+                                        <td><span>ZE223</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>15:35</span></td>
+                                        <td><span>15:35</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>제주항공</span></td>
+                                        <td><span>7C129</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>15:35</span></td>
+                                        <td><span>15:55</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>제주항공</span></td>
+                                        <td><span>7C131</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>15:55</span></td>
+                                        <td><span>15:55</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>이스타항공</span></td>
+                                        <td><span>ZE221</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>16:20</span></td>
+                                        <td><span>16:20</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td><span>아시아나항공</span></td>
+                                        <td><span>OZ8963</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>16:25</span></td>
+                                        <td><span>16:25</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>이스타항공</span></td>
+                                        <td><span>ZE225</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>16:25</span></td>
+                                        <td><span>16:25</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>대한항공</span></td>
+                                        <td><span>KE1165</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>16:35</span></td>
+                                        <td><span>16:35</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>이스타항공</span></td>
+                                        <td><span>ZE275</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>16:45</span></td>
+                                        <td><span>16:45</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>제주항공</span></td>
+                                        <td><span>7C133</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>16:45</span></td>
+                                        <td><span>16:45</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>티웨이항공</span></td>
+                                        <td><span>TW795</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>17:10</span></td>
+                                        <td><span>17:10</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>아시아나항공</span></td>
+                                        <td><span>OZ8981</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>17:25</span></td>
+                                        <td><span>17:25</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>대한항공</span></td>
+                                        <td><span>KE1177</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>17:30</span></td>
+                                        <td><span>17:30</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>티웨이항공</span></td>
+                                        <td><span>TW743</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>17:30</span></td>
+                                        <td><span>17:30</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>아시아나항공</span></td>
+                                        <td><span>OZ8019</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>17:40</span></td>
+                                        <td><span>17:40</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>에어부산</span></td>
+                                        <td><span>BX8019</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>17:40</span></td>
+                                        <td><span>17:40</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>티웨이항공</span></td>
+                                        <td><span>TW797</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>18:00</span></td>
+                                        <td><span>18:00</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>에어서울</span></td>
+                                        <td><span>RS907</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>18:15</span></td>
+                                        <td><span>18:15</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>티웨이항공</span></td>
+                                        <td><span>TW799</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>18:30</span></td>
+                                        <td><span>18:30</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>진에어</span></td>
+                                        <td><span>LJ513</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>19:00</span></td>
+                                        <td><span>19:00</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>티웨이항공</span></td>
+                                        <td><span>TW735</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>19:00</span></td>
+                                        <td><span>19:00</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>진에어</span></td>
+                                        <td><span>LJ515</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>19:05</span></td>
+                                        <td><span>19:05</span></td>
+                                        <td><span class="condi bg_blue">도착</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>아시아나항공</span></td>
+                                        <td><span>OZ8985</span></td>
+                                        <td><span>서울/김포</span></td>
+                                        <td><span>제주</span></td>
+                                        <td><span>19:15</span></td>
+                                        <td><span>19:15</span></td>
+                                        <td><span class="condi bg_blue">출발</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="travle_weather sub_cscenter">
+                    <div class="width_box">
+                        <p><img src="./k_port_info_files/cs_icon.jpg" alt=""></p>
+                        <p><b>담당관리</b> 예보과</p>
+                        <span></span>
+                        <p><b>전화번호</b> 032-740-2800</p>
+                    </div><!-- width_box -->
+                </div><!-- sub_cscenter -->
+
+
+            </div>
+            <!-- <style>
+	@media (max-width:2000px){
+		#imsi_image{
+			position:relative;
+			left:300px;
+			width:200px;
+			top:80px;
+		}
+	}
+	@media (max-width:1299px){
+		#imsi_image{
+			position:relative;
+			left:200px;
+			width:150px;
+			top:80px;
+		}
+	}
+	
+	@media (max-width:1199px){
+		#imsi_image{
+			position:relative;
+			left:200px;
+			width:150px;
+			top:80px;
+		}
+	}
+	
+	@media (max-width:959px){
+		#imsi-container{
+			width:100%;
+			display:flex;
+			justify-content:center;
+		}
+		#imsi_image{
+			position:relative;
+			left:0;
+			width:150px;
+			top:15px;
+		}
+	}
+</style> -->
+
+            <div id="footer">
+                <div class="footer_menu">
+                    <div class="width_box">
+                        <div class="fm_item">
+                            <a href="https://amo.kma.go.kr/weather/airport.do#" class="fmi_open">기상청 소속기관</a>
+                            <ul class="fmi_menu">
+                                <li><a href="https://www.weather.go.kr/w/index.do" target="_blank" title="새창열림">기상청</a>
+                                </li>
+                                <li><a href="https://www.kma.go.kr/metropolitan/html/main/index.jsp" target="_blank"
+                                        title="새창열림">수도권기상청</a></li>
+                                <li><a href="https://www.kma.go.kr/busan/html/main/index.jsp" target="_blank"
+                                        title="새창열림">부산지방기상청</a></li>
+                                <li><a href="https://www.kma.go.kr/gwangju/html/main/index.jsp" target="_blank"
+                                        title="새창열림">광주지방기상청</a></li>
+                                <li><a href="https://www.kma.go.kr/gangwon/html/main/index.jsp" target="_blank"
+                                        title="새창열림">강원지방기상청</a></li>
+                                <li><a href="https://www.kma.go.kr/daejeon/html/main/index.jsp" target="_blank"
+                                        title="새창열림">대전지방기상청</a></li>
+                                <li><a href="https://www.kma.go.kr/daegu/html/main/index.jsp" target="_blank"
+                                        title="새창열림">대구지방기상청</a></li>
+                                <li><a href="https://www.kma.go.kr/jeju/html/main/index.jsp" target="_blank"
+                                        title="새창열림">제주지방기상청</a></li>
+                                <li><a href="https://www.kma.go.kr/cheongju/html/main/index.jsp" target="_blank"
+                                        title="새창열림">청주기상지청</a></li>
+                                <li><a href="https://www.kma.go.kr/jeonju/html/main/index.jsp" target="_blank"
+                                        title="새창열림">전주기상지청</a></li>
+                                <li><a href="https://www.kma.go.kr/nmc/html/main/index.jsp" target="_blank"
+                                        title="새창열림">수치모델링센터</a></li>
+                                <li><a href="https://www.kma.go.kr/mhi/" target="_blank" title="새창열림">기상기후인재개발원</a></li>
+                                <li><a href="http://www.nims.go.kr/MA/main.jsp" target="_blank" title="새창열림">국립기상과학원</a>
+                                </li>
+                                <li><a href="https://nmsc.kma.go.kr/homepage/html/main/main.do" target="_blank"
+                                        title="새창열림">국가기상위성센터</a></li>
+                                <li><a href="https://radar.kma.go.kr/" target="_blank" title="새창열림">기상레이더센터</a></li>
+                                <li><a href="https://www.kma.go.kr/super/" target="_blank" title="새창열림">국가기상슈퍼컴퓨터센터</a>
+                                </li>
+                            </ul><!-- fmi_menu -->
+                        </div><!-- fm_item -->
+                        <div class="fm_item">
+                            <a class="fmi_open" href="https://www.gov.kr/portal/orgInfo?Mcode=11180" target="_blank"
+                                title="새창열림">주요행정기관</a>
+                        </div><!-- fm_item -->
+                        <!-- <div id="imsi-container">
+						<a href="https://pipc.kr" target="_blank">
+							<img id="imsi_image" src="./k_port_info_files/images/footer/info_banner.jpg"/>
+						</a>
+					</div> -->
+                    </div><!-- width_box -->
+                </div><!-- footer_menu -->
+
+                <div class="footer_util">
+                    <div class="width_box">
+                        <div class="open_Type">
+                            <img id="openImg" style="width: 150px; height: 50px;"
+                                src="./k_port_info_files/img_opentype01.jpg" alt="공공누리 저작물 이용허락">
+                        </div>
+                        <ul>
+                            <li><a href="https://amo.kma.go.kr/guide/privacy.do" style="color:#fe7800;">개인정보처리방침</a>
+                            </li>
+                            <li><a href="https://amo.kma.go.kr/guide/copyright.do">저작권보호 및 정책</a></li>
+                            <li><a href="https://amo.kma.go.kr/guide/accessibility.do">웹접근성정책</a></li>
+                            <li><a href="https://amo.kma.go.kr/amo/map.do">찾아오시는길</a></li>
+                        </ul>
+                    </div><!-- width_box -->
+                </div><!-- footer_util -->
+
+                <div class="copyright">
+                    <div class="width_box">
+                        <div class="copy_logo">
+                            <picture>
+                                <source srcset="./k_port_info_files/images/footer/f_logo.webp" media="(min-width:0px)">
+                                <source srcset="./k_port_info_files/images/footer/f_logo.png" media="(min-width:0px)">
+                                <img src="./k_port_info_files/f_logo.png" alt="항공기상청">
+                            </picture>
+                        </div>
+                        <div class="copy_info">
+                            <p>대표전화. <b>032-222-3030</b> (평일 9:00~18:00, 야간휴일은 당직실 연결)<span></span>(22382)인천광역시 중구
+                                제2터미널대로 444, 제2합동청사 2층(2F-0023)</p>
+                            <cite>Copyright by 2021 Aviation Meteorological Office. ALL RIGHTS RESERVED.</cite>
+                        </div>
+
+                        <div class="wa_cert">
+                            <picture>
+                                <source srcset="./k_port_info_files/images/footer/wamark_2024.webp" media="(min-width:0px)">
+                                <source srcset="./k_port_info_files/images/footer/wamark_2024.webp" media="(min-width:0px)">
+                                <img src="./k_port_info_files/images/footer/wamark_2024.webp"
+                                    alt="과학기술정보통신부 WEB접근성 한국웹접근성인증평가원 2024.01.13 ~ 2025.01.12">
+                            </picture>
+                        </div>
+                    </div><!-- width_box -->
+
+                </div><!-- copyright -->
+            </div><!-- footer -->
+            <!-- 20251218 웹로그 수집 솔루션 변경 logger2.amo.kma.go.kr > webstats logger -->
+            <!-- 2025년 말까지는 logger2.amo.kma.go.kr 병행하여 수집
+			<script src="/_js/logger2.amo.kma.go.kr.1077.js"></script> -->
+            <!-- LOGGER(TM) TRACKING SCRIPT V.40 FOR logger.co.kr / 100011 : COMBINE TYPE / DO NOT ALTER THIS SCRIPT. -->
+            <script src="./k_port_info_files/webstatsLoggerScript.js.다운로드"></script>
+            <noscript><img alt="Logger Script" width="1" height="1"
+                    src="http://webstats.kma.go.kr/tracker.sol.tsp?u=100011&amp;js=N" /></noscript>
+            <!-- END OF LOGGER TRACKING SCRIPT -->
+            <script src="./k_port_info_files/UserScriptConf.js.다운로드"></script>
+
+            <script>
+                var Location = window.location.href;
+                var LocationSplit = Location.split("/");
+
+                if (LocationSplit[4] == "photonews.do") {
+                    document.getElementById("openImg").src = "./k_port_info_files/images/footer/img_opentype04.jpg";
+                    document.getElementById("openImg").style = "width:150px;height:50px;"
+                } else {
+                    document.getElementById("openImg").src = "./k_port_info_files/images/footer/img_opentype01.jpg"
+                    document.getElementById("openImg").style = "width:150px;height:50px;"
+                }
+
+                var globalAirportSearchUI = new AirportSearchUI('#global-airport-search-ui');
+                var mobileAirportSearchUI = new AirportSearchUI('#mobile-airport-search-ui');
+            </script>
+        </div>
+    </div>
+    <script src="./k_port_info_files/es6-promise.auto.js.다운로드"></script>
+    <script src="./k_port_info_files/bluebird.min.js.다운로드"></script>
+    <script src="./k_port_info_files/html2canvas.min.js.다운로드"></script>
+    <script src="./k_port_info_files/jspdf.min.js.다운로드"></script>
+    <script src="./k_port_info_files/createPdf.js.다운로드"></script>
+    <div id="editor"></div>
+
+
+    <script src="./k_port_info_files/kakao.min.js.다운로드"></script>
+    <script src="./k_port_info_files/clipboard.min.js.다운로드"></script>
+
+    <script>
+        //<!--
+        $('.tt.clipboard').attr('data-clipboard-text', window.location.href);
+        var clipboard = new ClipboardJS('.tt.clipboard');
+        clipboard.on('success', function (e) { alert('주소가 복사되었습니다.') });
+        clipboard.on('error', function (e) { });
+
+
+
+        $('.sns_btn > a').on('click', function (e) {
+            e.preventDefault();
+            $(this).parent().toggleClass('active');
+        });
+        $('.sns_btn > a').on('focus', function (e) {
+            e.preventDefault();
+            $(this).parent().toggleClass('active');
+        });
+        $('.sns_btn > ul > li > a').on('click', function (e) {
+            e.preventDefault();
+            shareTo($(this).attr('data-to'));
+        });
+        function shareTo(type) {
+            var title = document.title;
+            var url = window.location.href;
+            if (type == "facebook") {
+                window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURI(url));
+            } else if (type == "twitter") {
+
+                window.open('https://twitter.com/intent/tweet?text=' + title + '&url=' + encodeURI(url));
+            } else if (type == "kakao") {
+                kakaoSendLink(title, url);
+            }
+        }
+
+        new ClipboardJS('.btn');
+        //-->
+    </script>
+
+
+    <deepl-input-controller translate="no"><template shadowrootmode="open">
+            <link rel="stylesheet" href="chrome-extension://cofdbpoegempjloogbagkncekinflcnj/build/content.css">
+            <div dir="ltr" style="visibility: initial !important;">
+                <div class="dl-input-translation-container svelte-95aucy">
+                    <div></div>
+                </div>
+            </div>
+        </template></deepl-input-controller>
+</body>
+
+</html>
