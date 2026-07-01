@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 출발/도착 공항 동일
         if (depSelect.value === arrSelect.value) {
-            alert('동일한 공항입니다.');
+            alert('출발지와 목적지가 동일합니다.');
             portInfoWrap.style.display = 'none';
             return;
         }
