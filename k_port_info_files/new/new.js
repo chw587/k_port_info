@@ -14,9 +14,60 @@ document.addEventListener('DOMContentLoaded', () => {
     let depSelected = false;
     let arrSelected = false;
 
-    /**
-     * select에서 선택된 option의 텍스트 앞 2글자를 반환
-     */
+
+    /* -------------------------------------------
+       리셋 시간ㄴ
+    ------------------------------------------- */
+
+    function getCurrentTimeString() {
+        const now = new Date();
+        const month = now.getMonth() + 1;
+        const date = now.getDate();
+        const days = ['일', '월', '화', '수', '목', '금', '토'];
+        const day = days[now.getDay()];
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+
+        return `${month}.${date}.(${day}) ${hours}:${minutes} 갱신 (현지시각)`;
+    }
+
+    function updateAllIssueDates() {
+        document.querySelectorAll('.tm_issue_date a').forEach(el => {
+            el.textContent = getCurrentTimeString();
+        });
+    }
+
+    function startIssueDateInterval() {
+        return setInterval(updateAllIssueDates, 3600000); // 1시간
+    }
+
+    // 페이지 로드 시 초기 세팅
+    function initIssueDate() {
+        updateAllIssueDates();
+
+        let intervalId = startIssueDateInterval();
+
+        document.querySelectorAll('.tm_issue_date a').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // 현재 시간으로 즉시 갱신
+                updateAllIssueDates();
+
+                clearInterval(intervalId);
+                intervalId = startIssueDateInterval();
+            });
+        });
+    }
+
+    initIssueDate();
+
+
+    /* -------------------------------------------
+       공항 select 관련
+    ------------------------------------------- */
+
+    // select에서 선택된 option 텍스트 앞 2글자
     function getShortName(selectEl) {
         const optionText = selectEl.options[selectEl.selectedIndex].text;
         return optionText.slice(0, 2);
@@ -28,9 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // 출발/도착 공항 동일
         if (depSelect.value === arrSelect.value) {
-            alert('출발지와 목적지가 동일합니다.');
+            alert('동일한 공항입니다.');
             portInfoWrap.style.display = 'none';
             return;
         }
@@ -51,28 +101,27 @@ document.addEventListener('DOMContentLoaded', () => {
         updatePortInfo();
     });
 
+
+    /* -------------------------------------------
+       출발/도착 교환 관련
+    ------------------------------------------- */
+
     function swapTempInfoPosition() {
         const placeholder = document.createComment('start-info-placeholder');
         tempInfoWrap.insertBefore(placeholder, startInfoDiv);
-
         tempInfoWrap.insertBefore(startInfoDiv, arriveInfoDiv);
-
         tempInfoWrap.insertBefore(arriveInfoDiv, placeholder);
-
         tempInfoWrap.removeChild(placeholder);
     }
 
     swapBtn.addEventListener('click', () => {
-        // 1) select 값 교환
         const tempValue = depSelect.value;
         depSelect.value = arrSelect.value;
         arrSelect.value = tempValue;
 
-        // change 이벤트를 발화시켜 기존 로직(updatePortInfo)이 처리하도록 함
         depSelect.dispatchEvent(new Event('change'));
         arrSelect.dispatchEvent(new Event('change'));
 
-        // 2) temp_info_wrap 안의 div 위치 교환
         swapTempInfoPosition();
     });
 });
