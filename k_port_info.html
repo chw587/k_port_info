@@ -9833,7 +9833,12 @@
                     if (!label || !minmax) return;
 
                     var requiredWidth = label.offsetWidth + minmax.scrollWidth + 8;
-                    groupEl.classList.toggle('is-compact-minmax', requiredWidth > groupEl.clientWidth);
+                    var shouldCompact = requiredWidth > groupEl.clientWidth;
+
+                    groupEl.classList.toggle('is-compact-minmax', shouldCompact);
+
+                    var compactWidth = label.offsetWidth + minmax.scrollWidth + 8;
+                    groupEl.classList.toggle('is-hidden-minmax', shouldCompact && compactWidth > groupEl.clientWidth);
                 });
             }
 
