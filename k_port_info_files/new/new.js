@@ -34,15 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function initIssueDate() {
         updateAllIssueDates();
 
-        // 1시간마다 자동 갱신. 클릭 시 즉시 갱신하고 타이머를 다시 시작한다.
-        let intervalId = setInterval(updateAllIssueDates, 3600000);
+        // 10분마다 자동 갱신. 클릭 시 즉시 갱신
+        let intervalId = setInterval(updateAllIssueDates, 600000);
 
         document.querySelectorAll('.tm_issue_date a').forEach((el) => {
             el.addEventListener('click', (event) => {
                 event.preventDefault();
                 updateAllIssueDates();
                 clearInterval(intervalId);
-                intervalId = setInterval(updateAllIssueDates, 3600000);
+                intervalId = setInterval(updateAllIssueDates, 600000);
             });
         });
     }

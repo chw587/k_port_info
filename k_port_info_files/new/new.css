@@ -20,6 +20,11 @@
 
 .sub-search>span {
     cursor: pointer;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .sub-search>span:hover {
@@ -144,18 +149,27 @@
 
 .temp_info_wrap>div .text_info>div>div {
     display: table-cell;
-    padding: 16px;
+    padding: 8px;
     box-sizing: border-box;
     vertical-align: middle;
 }
 
 .bl_tit {
-    min-width: 125px;
-    width: 20%;
+    width: 80px;
     align-content: center;
-    white-space: nowrap;
-    font-weight: bold;
     text-align: center;
+    position: relative;
+    font-size: 15px;
+}
+
+.bl_tit:before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: #e7e7e7;
 }
 
 
@@ -215,16 +229,10 @@
     text-align: center !important;
 }
 
-/* 7,8,9,10번째 항목은 숨김 (4,5,6,8,10과 겹치는 8,10은 결과적으로 숨김 처리됨) */
-.time_temp .airpor_api.forecast-window-ready .ts-legend.ts-type-daily>ul>li:nth-child(7),
-.time_temp .airpor_api.forecast-window-ready .ts-legend.ts-type-daily>ul>li:nth-child(8),
-.time_temp .airpor_api.forecast-window-ready .ts-legend.ts-type-daily>ul>li:nth-child(9),
-.time_temp .airpor_api.forecast-window-ready .ts-legend.ts-type-daily>ul>li:nth-child(10),
-.time_temp .airpor_api.forecast-window-ready .ts-hourly-item>ul>li:nth-child(7),
-.time_temp .airpor_api.forecast-window-ready .ts-hourly-item>ul>li:nth-child(8),
-.time_temp .airpor_api.forecast-window-ready .ts-hourly-item>ul>li:nth-child(9),
-.time_temp .airpor_api.forecast-window-ready .ts-hourly-item>ul>li:nth-child(10) {
-    display: none !important;
+
+.ts-legend>ul>li:last-child:after,
+.ts-item>ul>li:last-child:after {
+    background: none !important;
 }
 
 .time_temp .airpor_api.forecast-window-ready .forecast-date-head {
