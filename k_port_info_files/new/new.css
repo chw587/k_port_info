@@ -180,6 +180,14 @@
     margin: 0 !important;
 }
 
+.time_temp .airpor_api .material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1 ,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
 .time_temp .airpor_api .ts-chart,
 .time_temp .airpor_api .ts-info-weekly,
 .time_temp .airpor_api .ts-btn-move {
@@ -188,6 +196,17 @@
 
 .time_temp .airpor_api.forecast-window-ready .ts-body {
     overflow: hidden !important;
+}
+
+.ts-body .ts-vrb {
+        line-height: initial;
+}
+
+.ts-body .ts-vrb .wind-arrow{
+    display: inline-block;
+    font-size: 24px !important;
+    transition: transform .3s ease;
+    color: #FF8130;
 }
 
 .time_temp .airpor_api.forecast-window-ready .ts-item-wrap {

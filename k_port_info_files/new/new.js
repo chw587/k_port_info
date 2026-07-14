@@ -229,6 +229,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* ======================================================================
+       풍향 화살표 회전
+       ====================================================================== */
+    const testDegrees = [ 0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330 ];
+    
+
+    document.querySelectorAll(".wind-arrow").forEach((arrow, index) => {
+        const degree = testDegrees[index % testDegrees.length];
+
+        arrow.style.transform = `rotate(${degree}deg)`;
+    });
+
+
+    /* ======================================================================
        초기화
        ====================================================================== */
 
