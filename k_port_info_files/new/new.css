@@ -69,6 +69,16 @@
     width: 50%;
     border: 1px solid #cbd7e6;
     border-radius: 12px;
+    overflow: hidden;
+}
+
+/* 배경컬러 0722 */
+.temp_info_wrap .start-port {
+    background-color: rgb(222, 236, 241);
+}
+
+.temp_info_wrap .arrive-port {
+    background-color: rgb(241, 214, 154);
 }
 
 .temp_info_wrap>div .temp_header {
@@ -171,6 +181,19 @@
     width: 1px;
     background-color: #e7e7e7;
 }
+
+/* color 설정 00722 */
+.temp_header,
+.ts-legend li:not(:first-child),
+.ts-daily-item > *:not(.ts-daily-head),
+.text_info {
+    background: #fafafa !important;
+}
+
+.temp_info_wrap>div .ts {
+    left: 0.5px;
+}
+
 
 
 /* ==========================================================================
