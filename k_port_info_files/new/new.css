@@ -74,11 +74,11 @@
 
 /* 배경컬러 0722 */
 .temp_info_wrap .start-port {
-    background-color: rgb(222, 236, 241);
+    background-color:#EEF6FF;
 }
 
 .temp_info_wrap .arrive-port {
-    background-color: rgb(241, 214, 154);
+    background-color: #F1F8F4;
 }
 
 .temp_info_wrap>div .temp_header {
